@@ -1,2 +1,2 @@
-/io
-/plots
+/io/*.h5
+/plots/*.png
