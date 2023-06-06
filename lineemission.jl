@@ -39,18 +39,18 @@ for modeltype in ["SCHW"]
             # configurations = load_configurations_from_hdf5("io/$(filename).h5")            
             
             # We recreate the configs because they were saved with model under different name
-            image_plane = ImagePlane(distance = 500.0,
+            camera = ImagePlane(distance = 500.0,
                                     observer_inclination_in_degrees = ξ,
                                     observation_times = [0.0],
-                                    horizontal_side_image_plane = rout*1.1,
-                                    vertical_side_image_plane = rout*1.1,
+                                    horizontal_side_camera = rout*1.1,
+                                    vertical_side_camera = rout*1.1,
                                     horizontal_number_of_nodes = Nres,
                                     vertical_number_of_nodes = Nres)
 
             model = AccretionDiskWithTabulatedTemperature(inner_radius=rin, outer_radius=rout, filename=tempfilename)
                     
             configurations = VacuumOTEConfigurations(spacetime=spacetime,
-                                                    image_plane = image_plane,
+                                                    camera = camera,
                                                     radiative_model = model,
                                                     unit_mass_in_solar_masses=1.0)
             binned_fluxes, bins = line_emission_spectrum(initial_data, output_data, configurations; emission_profile = myprofile, num_bins = num_bins)

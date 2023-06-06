@@ -35,18 +35,18 @@ for modeltype in ["SBS"]
             Nstr = string(@sprintf("%03d", Nres))
             filename =  "$(modelname)_i$(ξstr)deg_N$(Nstr)"
             
-            image_plane = ImagePlane(distance = 500.0,
+            camera = ImagePlane(distance = 500.0,
                                     observer_inclination_in_degrees = ξ,
                                     observation_times = [0.0],
-                                    horizontal_side_image_plane = rout*1.1,
-                                    vertical_side_image_plane = rout*1.1,
+                                    horizontal_side_camera = rout*1.1,
+                                    vertical_side_camera = rout*1.1,
                                     horizontal_number_of_nodes = Nres,
                                     vertical_number_of_nodes = Nres)
 
             model = AccretionDiskWithTabulatedTemperature(inner_radius=rin, outer_radius=rout, filename=tempfilename)
                     
             configurations = VacuumOTEConfigurations(spacetime=spacetime,
-                                                    image_plane = image_plane,
+                                                    camera = camera,
                                                     radiative_model = model,
                                                     unit_mass_in_solar_masses=1.0)
 
