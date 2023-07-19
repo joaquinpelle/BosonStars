@@ -8,16 +8,12 @@ using Printf
 
 include("bosonstar_parameters.jl")
 
-Nres = 1200
-num_bins = 50
+# Nres = 1200
+Nres = 50
+num_bins = 40
 
-function myprofile(position, spacetime, model)
-    r = radius(position, spacetime)
-    return 1/r^2
-end
-
-for modeltype in ["SBS"]
-    for modelid in [3]
+for modeltype in ["LBS","SBS"]
+    for modelid in [1,2,3]
         
         modelname = modeltype*string(modelid)
         
