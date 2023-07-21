@@ -20,12 +20,12 @@
 #SBATCH --mail-user=jpelle@mi.unc.edu.ar
 #
 # Wall clock Limit:
-#SBATCH --time=1:00:00
+#SBATCH --time=00:10:00
 
 ##################################
 
 export JULIA_NUM_THREADS=64
 export SLURM_HINT=multithread 
 
-julia disk_bosonstar.jl
-#julia disk_schwarzschild.jl
+# julia disk_bosonstar.jl
+julia disk_schwarzschild.jl

@@ -10,7 +10,7 @@ function main(obs_distance=1000.0, Nres=1200)
     rout = 80.0
     tempfilename = "tables/TempSchw.dat"
     angles = [5, 45, 85]
-    ap = 8
+    ap = 4.5
     
     for i in eachindex(angles)
         ξ = angles[i]
