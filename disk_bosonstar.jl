@@ -10,7 +10,7 @@ include("bosonstar_parameters.jl")
 
 function main(obs_distance=1000.0, Nres=1200)
 
-    for modeltype in ["LBS","SBS"]
+    for modeltype in ["SBS"]
         for modelid in [1,2,3]
             
             modelname = modeltype*string(modelid)
@@ -34,7 +34,7 @@ function main(obs_distance=1000.0, Nres=1200)
                 if modeltype=="LBS"
                     ap = 3.5
                 elseif modeltype=="SBS"
-                    ap = 5.5
+                    ap = 4.25
                 end
 
                 camera = PinholeCamera(position = spher_pos,

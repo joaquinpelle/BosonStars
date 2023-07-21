@@ -16,8 +16,8 @@
 #SBATCH --nodes=1
 #SBATCH --ntasks-per-node=64
 #
-###SBATCH --mail-type=ALL
-###SBATCH --mail-user=jpelle@mi.unc.edu.ar
+#SBATCH --mail-type=ALL
+#SBATCH --mail-user=jpelle@mi.unc.edu.ar
 #
 # Wall clock Limit:
 #SBATCH --time=1:00:00
@@ -28,3 +28,4 @@ export JULIA_NUM_THREADS=64
 export SLURM_HINT=multithread 
 
 julia disk_bosonstar.jl
+#julia disk_schwarzschild.jl
