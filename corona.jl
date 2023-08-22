@@ -26,7 +26,7 @@ function lorentz_factors(bins, spacetime, disk)
     for (i,r) in enumerate(radii)
         position[2] = r
         metric!(g, position, spacetime)
-        emitter_four_velocity!(u, position, g, spacetime, disk, coords_top)
+        rest_frame_four_velocity!(u, position, g, spacetime, disk, coords_top)
         γ[i] = u[1] 
     end
     return γ
@@ -40,8 +40,8 @@ function energies_quotients(data, spacetime::AbstractSpacetime, disk::AbstractAc
     nrays = size(data, 2)
     q = zeros(nrays)
     # Break the work into chunks. More chunks per thread has better load balancing but more overhead
-    nchunks = div(nrays, Threads.nthreads()*2)
-    chunks = Iterators.partition(1:nrays, nchunks)
+    chunk_size = div(nrays, Threads.nthreads()*2)
+    chunks = Iterators.partition(1:nrays, chunk_size)
     # Map over the chunks, creating an array of spawned tasks. Sync to wait for the tasks to finish.
     @sync map(chunks) do chunk
         Threads.@spawn begin
@@ -53,7 +53,7 @@ function energies_quotients(data, spacetime::AbstractSpacetime, disk::AbstractAc
                     momentum = data[5:8,i]
                 end
                 metric!(g, position, spacetime)
-                emitter_four_velocity!(u, position, g, spacetime, disk, coords_top)
+                rest_frame_four_velocity!(u, position, g, spacetime, disk, coords_top)
                 q[i] = -Skylight.scalar_product(u,momentum,g)
             end
         end
