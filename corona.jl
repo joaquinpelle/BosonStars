@@ -1,4 +1,3 @@
-
 radial_bins(disk; nbins) = range(disk.inner_radius, disk.outer_radius, length=nbins+1)
 radial_binsize(disk; nbins) = (disk.outer_radius-disk.inner_radius)/nbins
 
