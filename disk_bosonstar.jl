@@ -11,7 +11,7 @@ include("bosonstar_parameters.jl")
 function main(obs_distance=1000.0, Nres=1200)
 
     for modeltype in ["SBS"]
-        for modelid in [3]
+        for modelid in [1,3]
             
             modelname = modeltype*string(modelid)
             
@@ -56,18 +56,18 @@ function main(obs_distance=1000.0, Nres=1200)
                 output_data = run.output_data
                 save_to_hdf5("io/$(filename).h5", configurations, initial_data, [run]; mode="w")
 
-                bolometric_intensities, q = observed_bolometric_intensities(initial_data, output_data, configurations)
-                xs,ys = axes_ranges(camera)
-                zs = grid_view(bolometric_intensities, configurations)
+                # bolometric_intensities, q = observed_bolometric_intensities(initial_data, output_data, configurations)
+                # xs,ys = axes_ranges(camera)
+                # zs = grid_view(bolometric_intensities, configurations)
 
-                # joint_limits = (1e4,2e5)
-                fig = Figure()
-                ax = Axis(fig[1,1], xlabel=L"\alpha", ylabel=L"\beta", ylabelsize = 26, xlabelsize = 26) 
-                hmap = heatmap!(xs, ys, zs; colormap=:gist_heat, interpolate=true)#, colorrange=joint_limits)
-                Colorbar(fig[:, end+1], hmap, label=L"I", labelsize=26, width = 15, ticksize = 18, tickalign = 1)
-                colsize!(fig.layout, 1, Aspect(1, 1.0))
-                colgap!(fig.layout, 7)
-                CairoMakie.save("plots/image/$(filename).png", fig)
+                # # joint_limits = (1e4,2e5)
+                # fig = Figure()
+                # ax = Axis(fig[1,1], xlabel=L"\alpha", ylabel=L"\beta", ylabelsize = 26, xlabelsize = 26) 
+                # hmap = heatmap!(xs, ys, zs; colormap=:gist_heat, interpolate=true)#, colorrange=joint_limits)
+                # Colorbar(fig[:, end+1], hmap, label=L"I", labelsize=26, width = 15, ticksize = 18, tickalign = 1)
+                # colsize!(fig.layout, 1, Aspect(1, 1.0))
+                # colgap!(fig.layout, 7)
+                # CairoMakie.save("plots/image/$(filename).png", fig)
 
                 println("$(filename) done")
                 # binned_fluxes, bins = line_emission_spectrum(initial_data, output_data, configurations; emission_profile = myprofile, num_bins = num_bins)

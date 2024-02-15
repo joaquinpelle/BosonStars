@@ -10,7 +10,7 @@
 ### Job Name:
 #SBATCH -J bosonstar
 
-#SBATCH --partition=multi
+#SBATCH --partition=short
 
 ### Number of nodes and MPI tasks per node:
 #SBATCH --nodes=1
@@ -20,14 +20,14 @@
 #SBATCH --mail-user=jpelle@mi.unc.edu.ar
 #
 # Wall clock Limit:
-#SBATCH --time=0:30:00
+#SBATCH --time=1:00:00
 
 ##################################
 
 export JULIA_NUM_THREADS=64
 export SLURM_HINT=multithread 
 
-# julia disk_bosonstar.jl
+julia disk_bosonstar.jl >> std/out.txt
 # julia disk_schwarzschild.jl
 # julia run_corona.jl
-julia run_sch_corona.jl
+# julia run_sch_corona.jl
