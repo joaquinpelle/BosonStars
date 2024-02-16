@@ -27,7 +27,7 @@
 export JULIA_NUM_THREADS=64
 export SLURM_HINT=multithread 
 
-julia disk_bosonstar.jl >> std/out.txt
+julia disk_bosonstar.jl 
 # julia disk_schwarzschild.jl
 # julia run_corona.jl
 # julia run_sch_corona.jl
