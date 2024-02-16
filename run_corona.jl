@@ -1,14 +1,13 @@
-using Pkg
+using Pkg 
 Pkg.activate("BosonStars")
 using CairoMakie
 using Printf
 using Colors
 using DelimitedFiles
-using Revise
 using Skylight
-includet("corona.jl")
-includet("ranges.jl")
-includet("juliacolors.jl")
+include("corona.jl")
+include("ranges.jl")
+include("juliacolors.jl")
 
 #   Boson star
 function calculate_profile(modelname, modelid; height, npp, nbins, save=true, plot=false)
@@ -30,24 +29,7 @@ function calculate_profile(modelname, modelid; height, npp, nbins, save=true, pl
     cb = callback(spacetime, plane)
     sim = integrate(initial_data, configurations, cb, cbp; method=VCABM(), reltol=1e-5, abstol=1e-5)
     output_data = sim.output_data
-    # at_source = map(ray -> is_final_position_at_source(ray[1:4], spacetime, disk) && ray[3] ≈ π/2 && abs(Skylight.norm_squared(ray[5:8], metric(ray[1:4], spacetime))) < 1e-2, eachcol(output_data))
-    # radii = output_data[2,at_source]
-    # q = energies_quotients(output_data[:,at_source], spacetime, disk)
-    # # bins = radial_bins(disk, nbins=100)
-    # bins = range(cbrt(disk.inner_radius), stop=cbrt(disk.outer_radius), length=nbins).^3
-    # A = ring_areas(bins, spacetime)
-    # γ = lorentz_factors(bins, spacetime, disk)
-    # h = fit(Histogram, radii, bins)
-    # h = normalize(h, mode=:probability)
-    # 𝓝 = h.weights
-
-    # qavg = average_inside_radial_bins(q, radii, bins)
-
-    # Γ = corona.spectral_index
-    # n = 𝓝./(A.*γ)
-    # I = qavg.^Γ.*n
-
-    # bins_midpoints = 0.5*(bins[1:end-1] + bins[2:end])
+    
     I, bins_midpoints = emissivity_profile(output_data, spacetime, disk, corona, nbins = nbins)
 
     hstr = string(@sprintf("%.1f", corona.height))
@@ -63,7 +45,7 @@ function calculate_profile(modelname, modelid; height, npp, nbins, save=true, pl
     end
 
     if plot
-        fig = Figure(resolution=(400,400))
+        fig = Figure(size=(400,400))
         ax = Axis(fig[1,1])
         lines!(ax, bins_midpoints, I)
         ax.xscale = log10
@@ -78,12 +60,11 @@ function calculate_profile(modelname, modelid; height, npp, nbins, save=true, pl
 end
 
 function main()
-    for modelname in ["SBS"]
-        for modelid in [1,3]
-            for height in [2.5, 5, 10]
+    for modelname in ["LBS"]
+        for modelid in [3]
+            for height in [10]
                 println("Doing $(modelname)$(modelid) h=$(height)")
-                # calculate_profile(modelname, modelid; height=height, npp=5000000, nbins=50, save=true, plot=true)
-                calculate_profile(modelname, modelid; height=height, npp=5000, nbins=50, save=true, plot=true)
+                calculate_profile(modelname, modelid; height=height, npp=5000000, nbins=50, save=true, plot=true) 
             end
         end
     end

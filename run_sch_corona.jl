@@ -60,7 +60,7 @@ function calculate_sch_profile(;height, npp, nbins, save=true, plot=false)
     end
 
     if plot
-        fig = Figure(resolution=(400,400))
+        fig = Figure(size=(400,400))
         ax = Axis(fig[1,1])
         lines!(ax, bins_midpoints, I)
         ax.xscale = log10

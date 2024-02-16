@@ -63,7 +63,7 @@ function plot_mosaic(model, figname)
     axes = Matrix{Axis}(undef, 3, 3)
     set_theme!(; fonts = (; regular = "Times New Roman"))
     layout = GridLayout(3, 3)
-    fig = Figure(layout = layout, resolution = (800, 800))
+    fig = Figure(layout = layout, size = (800, 800))
     inclination_labels = [L"\xi = 5^\circ", L"\xi = 45^\circ", L"\xi = 85^\circ"]
     cbar_ticks = model_ticks[model]
     modelchar = char_dict[model] 

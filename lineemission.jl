@@ -59,7 +59,7 @@ for modeltype in ["SCHW"]
             # We calculate midpoints of x to use as x coordinates for y
             max_flux = maximum(binned_fluxes)
             bins_midpoints = 0.5*(bins[1:end-1] + bins[2:end])
-            fig = Figure(resolution = (600, 400))
+            fig = Figure(size = (600, 400))
             ax = Axis(fig[1, 1], xlabel = L"E/E_0", ylabel = "Flux (arbitrary)", title = "Relativistic line broadening", titlefont=:regular)
             skl = lines!(ax, bins_midpoints, binned_fluxes/max_flux, linewidth = 3, color = :black)
             

@@ -112,7 +112,7 @@ function replot(dirname, obs_time::Real; start_offset::Real, qmin=nothing, qmax=
     bins_midpoints1 = 0.5*(bins1[1:end-1] + bins1[2:end])
     bins_midpoints2 = 0.5*(bins2[1:end-1] + bins2[2:end])
 
-    fig = Figure(resolution = (600, 400), font = "CMU Serif")
+    fig = Figure(size = (600, 400), font = "CMU Serif")
     ax = Axis(fig[1, 1], xlabel = L"E/E_0", ylabel = "Flux (arbitrary)", title = title, titlefont=:regular)
     lines!(ax, bins_midpoints, binned_fluxes/Fmax, linewidth = 3, color = julia_green, label="Total")
     lines!(ax, bins_midpoints1, binned_fluxes1/Fmax, linestyle=:dash, linewidth = 3, color = julia_red, label="BH1")
@@ -190,7 +190,7 @@ function replot_duplicate(dirname, obs_time::Real; start_offset::Real, dup_offse
     bins_midpoints1 = 0.5*(bins1[1:end-1] + bins1[2:end])
     bins_midpoints2 = 0.5*(bins2[1:end-1] + bins2[2:end])
 
-    fig = Figure(resolution = (600, 400), font = "CMU Serif")
+    fig = Figure(size = (600, 400), font = "CMU Serif")
     ax = Axis(fig[1, 1], xlabel = L"E/E_0", ylabel = "Flux (arbitrary)", title = title, titlefont=:regular)
     lines!(ax, bins_midpoints, binned_fluxes/Fmax, linewidth = 3, color = julia_green, label="Total")
     lines!(ax, bins_midpoints1, binned_fluxes1/Fmax, linestyle=:dash, linewidth = 3, color = julia_red, label="BH1")
@@ -205,7 +205,7 @@ function replot_duplicate(dirname, obs_time::Real; start_offset::Real, dup_offse
     axislegend(;labelsize=18, position=:lt)
     CairoMakie.save(spectrumfile, fig)
 
-    fig = Figure(resolution = (600, 400), font = "CMU Serif")
+    fig = Figure(size = (600, 400), font = "CMU Serif")
     ax = Axis(fig[1, 1], xlabel = L"E/E_0", ylabel = "Flux (arbitrary)", title = title_dup, titlefont=:regular)
     lines!(ax, bins_midpoints, binned_fluxes/Fmax, linewidth = 3, color = julia_green, label="Total")
     lines!(ax, bins_midpoints2, binned_fluxes2/Fmax, linestyle=:dash, linewidth = 3, color = julia_red, label="BH1")
