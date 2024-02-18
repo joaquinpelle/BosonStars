@@ -30,7 +30,7 @@ function calculate_profile(modelname, modelid; height, npp, nbins, save=true, pl
     sim = integrate(initial_data, configurations, cb, cbp; method=VCABM(), reltol=1e-5, abstol=1e-5)
     output_data = sim.output_data
     
-    I, bins_midpoints = emissivity_profile(output_data, spacetime, disk, corona, nbins = nbins)
+    I, bins_edges = emissivity_profile(output_data, spacetime, disk, corona, nbins = nbins)
 
     hstr = string(@sprintf("%.1f", corona.height))
     istr = string(@sprintf("%02d", corona.spectral_index))
@@ -40,14 +40,14 @@ function calculate_profile(modelname, modelid; height, npp, nbins, save=true, pl
 
     if save
         open(savename, "w") do io
-            writedlm(io, [bins_midpoints I])
+            writedlm(io, [bins_edges I])
         end
     end
 
     if plot
         fig = Figure(size=(400,400))
         ax = Axis(fig[1,1])
-        lines!(ax, bins_midpoints, I)
+        lines!(ax, bins_edges, I)
         ax.xscale = log10
         ax.yscale = log10
         # xlims!(1.0,200)
@@ -60,9 +60,9 @@ function calculate_profile(modelname, modelid; height, npp, nbins, save=true, pl
 end
 
 function main()
-    for modelname in ["LBS"]
-        for modelid in [3]
-            for height in [10]
+    for modelname in ["SBS", "LBS"]
+        for modelid in [1,2,3]
+            for height in [2.5, 5.0, 10.0]
                 println("Doing $(modelname)$(modelid) h=$(height)")
                 calculate_profile(modelname, modelid; height=height, npp=5000000, nbins=50, save=true, plot=true) 
             end
