@@ -62,7 +62,7 @@ end
 function main()
     for modelname in ["SBS", "LBS"]
         for modelid in [1,2,3]
-            for height in [2.5, 5.0, 10.0]
+            for height in [40.0]
                 println("Doing $(modelname)$(modelid) h=$(height)")
                 calculate_profile(modelname, modelid; height=height, npp=5000000, nbins=50, save=true, plot=true) 
             end
