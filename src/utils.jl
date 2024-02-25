@@ -25,7 +25,7 @@ function rescale_axes(xs, ys)
     return xs, ys
 end
 
-size(runset::AbstractRunSet) = (length(runset.models), length(iterated_parameter(runset)))
+size(runset::AbstractRunSet) = (length(runset.models), length(primary_parameter(runset)))
 
 colorbar_label() = L"I/I_{\text{max}}"
 get_cbar_ticks(::LBS) = [[0.0,0.02,0.05],[0.0, 0.1, 0.2],[0.0, 0.5, 1.0]]

@@ -26,5 +26,5 @@ have_three_heights(runsets::Vector{CoronaRunSet}) = all(has_three_heights, runse
 have_same_heights(runsets::Vector{CoronaRunSet}) = all(r -> r.heights == runsets[1].heights, runsets)
 have_same_models(runsets::Vector{T}) where {T<:AbstractRunSet} = all(r -> r.models == runsets[1].models, runsets)
 
-have_three_iterated_parameters(runsets::Vector{T}) where {T<:AbstractRunSet} = all(r -> length(iterated_parameter(r)) == 3, runsets)
-have_same_iterated_parameters(runsets::Vector{T}) where {T<:AbstractRunSet} = all(r -> iterated_parameter(r) == iterated_parameter(runsets[1]), runsets)
+have_three_iterated_parameters(runsets::Vector{T}) where {T<:AbstractRunSet} = all(r -> length(primary_parameter(r)) == 3, runsets)
+have_same_iterated_parameters(runsets::Vector{T}) where {T<:AbstractRunSet} = all(r -> primary_parameter(r) == primary_parameter(runsets[1]), runsets)

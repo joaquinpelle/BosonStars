@@ -53,8 +53,8 @@ end
 #     return CoronaRunParams(params.models[modelidx], params.heights[hidx], params.number_of_packets, params.num_radial_bins)
 # end
 
-iterated_parameter(::RunSet) = params.inclinations
-iterated_parameter(::CoronaRunSet) = params.heights
+primary_parameter(::RunSet) = params.inclinations
+primary_parameter(::CoronaRunSet) = params.heights
 
 # get_model(params::AbstractRunParams) = params.model
 
