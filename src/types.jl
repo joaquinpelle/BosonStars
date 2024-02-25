@@ -35,7 +35,7 @@ end
     height::T 
     spectral_index::Float64
     npp::Int = 5000000
-    nbins::Int = 50
+    num_radial_bins::Int = 50
 end
 
 @with_kw struct CoronaRunSet{M<:AbstractModel,T<:Real} <: AbstractRunSet 
@@ -43,7 +43,7 @@ end
     heights::Vector{T} 
     spectral_index::Float64
     npp::Int
-    nbins::Int
+    num_radial_bins::Int
 end
 
 function create_model_set(;LBS_ids=[], 
@@ -61,7 +61,7 @@ function get_runparams(params::RunSet, modelidx, ξidx)
 end
 
 function get_runparams(params::CoronaRunSet, modelidx, hidx)
-    return RunParams(params.models[modelidx], params.heights[hidx], params.npp, params.nbins)
+    return RunParams(params.models[modelidx], params.heights[hidx], params.npp, params.num_radial_bins)
 end
 
 iterated_parameter(::RunSet) = params.inclinations
