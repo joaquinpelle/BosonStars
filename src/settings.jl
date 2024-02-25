@@ -38,8 +38,8 @@ function create_camera(params::RunParams)
     return PinholeCamera(position = observation_position(params),
                 horizontal_aperture_in_degrees = aperture, 
                 vertical_aperture_in_degrees = aperture, 
-                horizontal_number_of_pixels = params.Nres,
-                vertical_number_of_pixels = params.Nres) 
+                horizontal_number_of_pixels = params.number_of_pixels_per_side,
+                vertical_number_of_pixels = params.number_of_pixels_per_side) 
 end
 
 create_plane(params::RunParams) = create_plane(params.model)

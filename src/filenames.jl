@@ -10,14 +10,14 @@ modeldir(::Schwarzschild) = "schwarzschild"
 function basename(params::RunParams)
     modelsymbol = to_symbol(params.model)
     ξstr = string(@sprintf("%02d", ξ)) 
-    Nstr = string(@sprintf("%04d", Nres))
+    Nstr = string(@sprintf("%04d", number_of_pixels_per_side))
     return "$(modelsymbol)_i$(ξstr)deg_N$(Nstr)"
 end
 
 function basename(params::CoronaRunParams)
     modelsymbol = to_symbol(params.model)
     ξstr = string(@sprintf("%02d", ξ)) 
-    Nstr = string(@sprintf("%04d", Nres))
+    Nstr = string(@sprintf("%04d", number_of_pixels_per_side))
     return "$(modelsymbol)_i$(ξstr)deg_N$(Nstr)"
 end
 

@@ -16,7 +16,7 @@ BosonStars(potential::AbstractPotential, Ns) = [BosonStar(potential, N) for N in
 @with_kw struct RunParams{M<:AbstractModel,T<:Real}
     model::M
     ξ::T 
-    Nres::Int 
+    number_of_pixels_per_side::Int 
     observation_radius::Float64 
 end
 
@@ -26,7 +26,7 @@ abstract type AbstractRunParams end
 @with_kw struct RunSet{M<:AbstractModel,T<:Real} <: AbstractRunSet
     models::Vector{M}
     inclinations::Vector{T} 
-    Nres::Int
+    number_of_pixels_per_side::Int
     observation_radius::Float64 
 end
 
@@ -57,7 +57,7 @@ function create_model_set(;LBS_ids=[],
 end
 
 function get_runparams(params::RunSet, modelidx, ξidx)
-    return RunParams(params.models[modelidx], params.inclinations[ξidx], params.Nres, params.observation_radius)
+    return RunParams(params.models[modelidx], params.inclinations[ξidx], params.number_of_pixels_per_side, params.observation_radius)
 end
 
 function get_runparams(params::CoronaRunSet, modelidx, hidx)
