@@ -10,7 +10,7 @@ end
 
 function zextrema(runset::CameraRunSet)
     zmin, zmax = Inf, -Inf
-    for i in eachindex(runset.models)
+    for i in model_id(runset)
         for j in eachindex(runset.inclinations)
             runparams = get_runparams(runset, i, j)
             zminv, zmaxv = zextrema(runparams)
@@ -24,7 +24,7 @@ end
 function zextrema(runset::CameraRunSet, j::Int)
     zmin = Inf
     zmax = -Inf
-    for i in eachindex(runset.models)
+    for i in model_id(runset)
         runparams = get_runparams(runset, i, j)
         zminv, zmaxv = zextrema(runparams)
         zmin = min(zmin, zminv)

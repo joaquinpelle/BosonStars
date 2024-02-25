@@ -26,7 +26,7 @@ function bolometric_intensity_mosaic(runset::CameraRunSet, potential::Union{SBS,
         axtop = axes[1,k]
         axright = axes[k,3]
         axleft = axes[k,1]
-        axbottom.xlabel = xaxis_label()
+        axbottom.xlabel = alpha_label()
         axbottom.xlabelvisible = k == 2 #Only show xlabel for middle column
         axbottom.xlabelsize = 22
         axbottom.xticklabelsize = 12
@@ -35,7 +35,7 @@ function bolometric_intensity_mosaic(runset::CameraRunSet, potential::Union{SBS,
 
         axright.yaxisposition = :right
         axright.ylabelvisible = k == 2 #Only show ylabel for middle row
-        axright.ylabel = yaxis_label()
+        axright.ylabel = beta_label()
         axright.ylabelsize = 22
         axright.yticklabelsize = 12
         axright.ytickalign = 1
@@ -62,7 +62,7 @@ function bolometric_intensity_mosaic(runset::CameraRunSet, potential::Union{SBS,
         cbar.ticksize = 12
         cbar.ticklabelsize = 12
         cbar.tickcolor = :black
-        cbar.label = colorbar_label()
+        cbar.label = intensity_label()
         cbar.labelsize = 22
         cbar.labelpadding = 0.5
         cbar.labelvisible = k == 2 #Only show colorbar label for middle column
@@ -107,7 +107,7 @@ function bolometric_intensity_mosaic(runset::CameraRunSet, potential::BH; zmax, 
     axright.xlabelvisible = false 
 
     axright.yaxisposition = :right
-    axright.ylabel = yaxis_label()
+    axright.ylabel = beta_label()
     axright.ylabelsize = 22
     axright.yticklabelsize = 12
     axright.ytickalign = 1
@@ -121,7 +121,7 @@ function bolometric_intensity_mosaic(runset::CameraRunSet, potential::BH; zmax, 
     for k in 1:3
 
         ax = axes[1,k]
-        ax.xlabel = xaxis_label()
+        ax.xlabel = alpha_label()
         ax.xlabelsize = 22
         ax.xticklabelsize = 12
         ax.xtickalign = 1
@@ -134,7 +134,7 @@ function bolometric_intensity_mosaic(runset::CameraRunSet, potential::BH; zmax, 
         cbar.ticksize = 12
         cbar.ticklabelsize = 12
         cbar.tickcolor = :black
-        cbar.label = colorbar_label()
+        cbar.label = intensity_label()
         cbar.labelsize = 22
         cbar.labelpadding = 0.5
         cbar.labelvisible = k == 2 #Only show colorbar label for middle column
@@ -187,7 +187,7 @@ function spectrum_mosaic(LBSrunset::CameraRunSet, SBSrunset::CameraRunSet, BHrun
     axleft.xlabelvisible = false 
     axright.xlabelvisible = false 
 
-    axleft.ylabel = flux_label() 
+    axleft.ylabel = thermal_emission_flux_label() 
     
     axleft.ylabelsize = 22
     axleft.yticklabelsize = 12
@@ -206,7 +206,7 @@ function spectrum_mosaic(LBSrunset::CameraRunSet, SBSrunset::CameraRunSet, BHrun
         ax.yscale = log10
         ax.title = inclination_labels[j]
         ax.titlesize = 18
-        ax.xlabel = energy_label() 
+        ax.xlabel = thermal_emission_energy_label() 
         ax.xlabelsize = 22
         ax.ylabelsize = 22
         ax.xticklabelsize = 15
@@ -395,8 +395,8 @@ function line_emission_mosaic(SBSrunset::CameraRunSet, BHrunset::CameraRunSet, S
     runsets = [SBSrunset, BHrunset, SBScorona_runset, BHcorona_runset]
     have_unique_potentials(runsets) || throw(ArgumentError("Runsets must have unique potentials")) 
     have_same_models([SBSrunset, SBScorona_runset]) || throw(ArgumentError("Boson star runsets must have the same models"))
-    have_three_iterated_parameters(runsets) || throw(ArgumentError("Runsets must have three secondary parameters (height or inclination)")) 
-    have_same_iterated_parameters(runsets) || throw(ArgumentError("Runsets must have the same secondary parameters (height or inclination)"))
+    have_three_primary_parameters(runsets) || throw(ArgumentError("Runsets must have three secondary parameters (height or inclination)")) 
+    have_same_primary_parameters(runsets) || throw(ArgumentError("Runsets must have the same secondary parameters (height or inclination)"))
     have_three_models([SBSrunset, SBScorona_runset]) || throw(ArgumentError("Boson star runsets must have three models")) 
     have_one_model([BHrunset, BHcorona_runset]) || throw(ArgumentError("Black hole runset must have one model")) 
 

@@ -27,15 +27,15 @@ end
 
 size(runset::AbstractRunSet) = (length(runset.models), length(primary_parameter(runset)))
 
-colorbar_label() = L"I/I_{\text{max}}"
+intensity_label() = L"I/I_{\text{max}}"
 get_cbar_ticks(::LBS) = [[0.0,0.02,0.05],[0.0, 0.1, 0.2],[0.0, 0.5, 1.0]]
 get_cbar_ticks(::SBS) = [[0.0,0.002,0.004],[0.0, 0.005, 0.01, 0.015],[0.01, 0.02, 0.03]]
 get_cbar_ticks(::BH) = [[0.0,0.002,0.004],[0.0, 0.005, 0.01, 0.015],[0.01, 0.02, 0.03]]
 
-xaxis_label() = L"\alpha \, [^\circ]"
-yaxis_label() = L"\beta \, [^\circ]"
+alpha_label() = L"\alpha \, [^\circ]"
+beta_label() = L"\beta \, [^\circ]"
 
-function model_label(model::BosonStar)
+function model_label(model::AbstractBosonStar)
     symbol = to_symbol(model)
     return L"\text{%$(symbol)}"
 end
@@ -51,10 +51,10 @@ function get_height_labels(runset::CoronaRunSet)
     return [L"h = %$(h) M" for h in runset.heights]
 end
 
-energy_label() = L"E \, [\text{eV}]"
+thermal_emission_energy_label() = L"E \, [\text{eV}]"
 line_emission_energy_label() = L"E / E_0"
 radius_label() = L"r / r_g"
-flux_label() = L"F_E \,[\text{erg} \, \text{cm}^{-2} \, \text{s}^{-1}\,\text{eV}^{-1}]"
+thermal_emission_flux_label() = L"F_E \,[\text{erg} \, \text{cm}^{-2} \, \text{s}^{-1}\,\text{eV}^{-1}]"
 line_emission_flux_label() = L"\text{Flux} \, [\text{arbitrary}]"
 emissivity_label() = L"\varepsilon (r) \, \, [\text{arbitrary}]"
 flat_lamppost_label() = L"I_e(r,h)"
