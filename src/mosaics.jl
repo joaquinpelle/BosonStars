@@ -390,7 +390,7 @@ function emissiviy_profile_mosaic_focused(SBSrunset::CoronaRunSet, BHrunset::Cor
     save(figname, fig)
 end
 
-function line_emission_mosaic(SBSrunset::RunSet, BHrunset::RunSet, SBScorona_runset::CoronaRunSet, BHcorona_runset::CoronaRunSet; num_energy_bins, figname)
+function line_emission_mosaic(SBSrunset::RunSet, BHrunset::RunSet, SBScorona_runset::CoronaRunSet, BHcorona_runset::CoronaRunSet; number_of__energy_bins, figname)
 
     runsets = [SBSrunset, BHrunset, SBScorona_runset, BHcorona_runset]
     have_unique_potentials(runsets) || throw(ArgumentError("Runsets must have unique potentials")) 
@@ -400,8 +400,8 @@ function line_emission_mosaic(SBSrunset::RunSet, BHrunset::RunSet, SBScorona_run
     have_three_models([SBSrunset, SBScorona_runset]) || throw(ArgumentError("Boson star runsets must have three models")) 
     have_one_model([BHrunset, BHcorona_runset]) || throw(ArgumentError("Black hole runset must have one model")) 
 
-    SBSdata = line_emission_data(SBSrunset, SBScorona_runset; num_energy_bins = num_energy_bins)
-    BHdata = line_emission_data(BHrunset, BHcorona_runset; num_energy_bins = num_energy_bins)
+    SBSdata = line_emission_data(SBSrunset, SBScorona_runset; number_of__energy_bins = number_of__energy_bins)
+    BHdata = line_emission_data(BHrunset, BHcorona_runset; number_of__energy_bins = number_of__energy_bins)
 
     fig, axes = prepare_mosaic(nrows=3, size=(800, 800))
     inclination_labels = get_inclination_labels(SBSrunset)

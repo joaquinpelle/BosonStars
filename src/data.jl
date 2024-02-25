@@ -38,7 +38,7 @@ function emissivity_profile_data(runset::CoronaRunSet)
     return data
 end
 
-function line_emission_data(runset::RunSet, corona_runset::CoronaRunSet; num_energy_bins)
+function line_emission_data(runset::RunSet, corona_runset::CoronaRunSet; number_of__energy_bins)
     have_same_models(runset, corona_runset) || throw(ArgumentError("Runsets must have the same models"))
     data = Array{Any}(undef, size(runset)..., number_of_heights(corona_runset))
     for j in 1:number_of_inclinations(runset)
@@ -49,7 +49,7 @@ function line_emission_data(runset::RunSet, corona_runset::CoronaRunSet; num_ene
                 corona_runparams = get_runparams(corona_runset, i, k)
                 line_emission_disk = create_line_emission_disk(corona_runparams)
                 line_emission_configurations = replace_radiative_model!(configurations, line_emission_disk) 
-                binned_fluxes, bins = line_emission_spectrum(initial_data, output_data, line_emission_configurations; num_bins = num_energy_bins)
+                binned_fluxes, bins = line_emission_spectrum(initial_data, output_data, line_emission_configurations; num_bins = number_of__energy_bins)
                 data[i,j,k] = (binned_fluxes, bins)
             end
         end

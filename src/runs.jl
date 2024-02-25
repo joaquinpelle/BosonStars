@@ -46,7 +46,7 @@ function make_run(runparams::CoronaRunParams;
     cbp = callback_parameters(spacetime, plane, configurations; cbp_kwargs(runparams)...)
     sim = integrate(initial_data, configurations, cb, cbp; method=VCABM(), reltol=reltol, abstol=abstol)
     output_data = sim.output_data
-    I, bins_edges = emissivity_profile(output_data, spacetime, disk, corona; num_radial_bins = runparams.num_radial_bins)
+    I, bins_edges = emissivity_profile(output_data, spacetime, disk, corona; number_of__radial_bins = runparams.number_of__radial_bins)
     name = basename(runparams)
     save_profile(I, bins_edges; filename = corona_file(name))
     finished_run_message(name)
