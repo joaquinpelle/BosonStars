@@ -1,35 +1,34 @@
-to_string(potential::SBS) = "SBS"
-to_string(potential::LBS) = "LBS"
-to_symbol(potential::AbstractPotential) = (Symbol ∘ to_string)(potential)
-to_symbol(model::BosonStar) = Symbol(to_string(model.potential), model.id)
+to_string(::SBS{Int}) = "SBS$(model.id)"
+to_string(::LBS{Int}) = "LBS$(model.id)"
+to_symbol(model::SBS{Int}) = (Symbol ∘ to_string)(model)
 to_symbol(::BH) = :SCHW
 
-modeldir(::BosonStar) = "bosonstar"
+modeldir(::AbstractBosonStar) = "bosonstar"
 modeldir(::BH) = "schwarzschild"
 
 function basename(params::CameraRunParams)
     modelsymbol = to_symbol(params.model)
-    ξstr = string(@sprintf("%02d", inclination)) 
-    Nstr = string(@sprintf("%04d", number_of_pixels_per_side))
+    ξstr = string(@sprintf("%02d", params.inclination)) 
+    Nstr = string(@sprintf("%04d", params.number_of_pixels_per_side))
     return "$(modelsymbol)_i$(ξstr)deg_N$(Nstr)"
 end
 
 function basename(params::CoronaRunParams)
     modelsymbol = to_symbol(params.model)
-    ξstr = string(@sprintf("%02d", inclination)) 
-    Nstr = string(@sprintf("%04d", number_of_pixels_per_side))
+    ξstr = string(@sprintf("%02d", params.inclination)) 
+    Nstr = string(@sprintf("%04d", params.number_of_pixels_per_side))
     return "$(modelsymbol)_i$(ξstr)deg_N$(Nstr)"
 end
 
-function basename(runparams::CoronaRunParams)
-    dir = modeldir(runparams.model)
-    modelsymbol = to_symbol(runparams.model)
-    hstr = string(@sprintf("%.1f", runparams.height))
-    istr = string(@sprintf("%02d", runparams.spectral_index))
+function basename(params::CoronaRunParams)
+    dir = modeldir(params.model)
+    modelsymbol = to_symbol(params.model)
+    hstr = string(@sprintf("%.1f", params.height))
+    istr = string(@sprintf("%02d", params.spectral_index))
     return "$(dir)/$(modelsymbol)_h$(hstr)_idx$(istr)"
 end
 
-datafile(runparams::CameraRunParams) = datafile(basename(runparams))
-datafile(runparams::CoronaRunParams) = corona_file(basename(runparams))
+datafile(params::CameraRunParams) = datafile(basename(params))
+datafile(params::CoronaRunParams) = corona_file(basename(params))
 datafile(basename::AbstractString) = "io/$(basename).h5"
 corona_file(basename::AbstractString) = "io/corona/$(basename).txt"
