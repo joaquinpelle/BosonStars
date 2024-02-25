@@ -1,28 +1,39 @@
 abstract type AbstractModel end
-
-struct AbstractBosonStar <: AbstractModel end
-
-struct SBS{N} <: AbstractBosonStar end
-struct LBS{N} <: AbstractBosonStar end
+abstract type AbstractBosonStar <: AbstractModel end
 struct Schwarzschild <: AbstractModel end
 
-SBS(N) = SBS{N}()
-LBS(N) = LBS{N}()
+CollectiveId = Union{AbstractVector{Int},AbstractRange{Int}}
 
-abstract type AbstractRunParams end
-abstract type AbstractRunSet end
-
-@with_kw struct RunParams{M<:AbstractModel,T<:Real} <: AbstractRunParams
-    model::M
-    ξ::T 
-    number_of_pixels_per_side::Int 
-    observation_radius::Float64 
+struct SBS{T<:Union{Int,CollectiveId}} <: AbstractBosonStar 
+    id::T
+    function SBS(id::Int) 
+        id in 1:3 || throw(ArgumentError("The id of a SBS must be in the range `1:3`"))
+        new{Int}(id)
+    end
+    function SBS(id::CollectiveId) 
+        all(i -> i in 1:3, id) || throw(ArgumentError("The ids must be in the range `1:3`"))
+        new{typeof(id)}(id)
+    end
 end
 
-@with_kw struct RunSet{M<:AbstractModel,T<:Real} <: AbstractRunSet
-    models::Vector{M}
-    inclinations::Vector{T} 
-    number_of_pixels_per_side::Int
+struct LBS{T<:Union{Int,CollectiveId}} <: AbstractBosonStar 
+    id::T
+    function LBS(id::Int) 
+        id in 1:3 || throw(ArgumentError("The id must be in the range `1:3`"))
+        new{Int}(id)
+    end
+    function LBS(id::CollectiveId) 
+        all(i -> i in 1:3, id) || throw(ArgumentError("The ids must be in the range `1:3`"))
+        new{typeof(id)}(id)
+    end
+end
+
+abstract type AbstractRunParams end
+
+@with_kw struct CameraRunParams{M<:AbstractModel,T<:Real} <: AbstractRunParams
+    model::M
+    inclination::T 
+    number_of_pixels_per_side::Int 
     observation_radius::Float64 
 end
 
@@ -34,41 +45,23 @@ end
     num_radial_bins::Int
 end
 
-@with_kw struct CoronaRunSet{M<:AbstractModel,T<:Real} <: AbstractRunSet 
-    models::Vector{M}
-    heights::Vector{T} 
-    spectral_index::Float64
-    number_of_packets::Int
-    num_radial_bins::Int
-end
+# function get_runparams(params::RunSet, modelidx, ξidx)
+#     return CameraRunParams(params.models[modelidx], params.inclinations[ξidx], params.number_of_pixels_per_side, params.observation_radius)
+# end
 
-function create_model_set(;LBS_ids=[], 
-                    SBS_ids=[], 
-                    BH = false)
-    models = vcat(BosonStars(LBS(), LBS_ids), BosonStars(SBS(), SBS_ids))
-    if BH 
-        push!(models, Schwarzschild()) 
-    end
-    return models
-end
+# function get_runparams(params::CoronaRunSet, modelidx, hidx)
+#     return CoronaRunParams(params.models[modelidx], params.heights[hidx], params.number_of_packets, params.num_radial_bins)
+# end
 
-function get_runparams(params::RunSet, modelidx, ξidx)
-    return RunParams(params.models[modelidx], params.inclinations[ξidx], params.number_of_pixels_per_side, params.observation_radius)
-end
+# iterated_parameter(::RunSet) = params.inclinations
+# iterated_parameter(::CoronaRunSet) = params.heights
 
-function get_runparams(params::CoronaRunSet, modelidx, hidx)
-    return RunParams(params.models[modelidx], params.heights[hidx], params.number_of_packets, params.num_radial_bins)
-end
+# get_model(params::AbstractRunParams) = params.model
 
-iterated_parameter(::RunSet) = params.inclinations
-iterated_parameter(::CoronaRunSet) = params.heights
+# get_potential(runset::RunSet, modelidx::Int) = get_potential(runset.models[modelidx])
+# get_potential(model::BosonStar) = model.potential
+# get_potential(model::Schwarzschild) = model 
 
-get_model(params::AbstractRunParams) = params.model
-
-get_potential(runset::RunSet, modelidx::Int) = get_potential(runset.models[modelidx])
-get_potential(model::BosonStar) = model.potential
-get_potential(model::Schwarzschild) = model 
-
-number_of_models(runset::AbstractRunSet) = length(runset.models)
-number_of_inclinations(runset::RunSet) = length(runset.inclinations)
-number_of_heights(runset::CoronaRunSet) = length(runset.heights)
+number_of_models(params::AbstractRunParams) = isa(runset.model.id, Int) ? 1 : length(runset.model)
+number_of_inclinations(params::CameraRunParams) = length(runset.inclinations)
+number_of_heights(oarans::CoronRunParams) = length(runset.heights)
