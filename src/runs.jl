@@ -37,7 +37,7 @@ function make_run(runparams::CoronaRunParams;
     configurations = VacuumETOConfigurations(spacetime=spacetime,
                                     radiative_model = corona,
                                     number_of_points=1,
-                                    number_of_packets_per_point = npp, 
+                                    number_of_packets_per_point = number_of_packets, 
                                     max_radius = 110.0,
                                     unit_mass_in_solar_masses=1.0)
     initial_data = initialize(configurations)

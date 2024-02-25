@@ -34,7 +34,7 @@ end
     model::M
     height::T 
     spectral_index::Float64
-    npp::Int = 5000000
+    number_of_packets::Int = 5000000
     num_radial_bins::Int = 50
 end
 
@@ -42,7 +42,7 @@ end
     models::Vector{M}
     heights::Vector{T} 
     spectral_index::Float64
-    npp::Int
+    number_of_packets::Int
     num_radial_bins::Int
 end
 
@@ -61,7 +61,7 @@ function get_runparams(params::RunSet, modelidx, ξidx)
 end
 
 function get_runparams(params::CoronaRunSet, modelidx, hidx)
-    return RunParams(params.models[modelidx], params.heights[hidx], params.npp, params.num_radial_bins)
+    return RunParams(params.models[modelidx], params.heights[hidx], params.number_of_packets, params.num_radial_bins)
 end
 
 iterated_parameter(::RunSet) = params.inclinations
