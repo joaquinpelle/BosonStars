@@ -29,10 +29,18 @@ struct LBS{T<:Union{Int,CollectiveId}} <: AbstractBosonStar
 end
 
 abstract type AbstractRunParams end
+abstract type AbstractRunSet end
 
 @with_kw struct CameraRunParams{M<:AbstractModel,T<:Real} <: AbstractRunParams
     model::M
     inclination::T 
+    number_of_pixels_per_side::Int 
+    observation_radius::Float64 
+end
+
+@with_kw struct CameraRunSet{M<:AbstractModel,T<:Real} <: AbstractRunSet
+    models::M
+    inclinations::T 
     number_of_pixels_per_side::Int 
     observation_radius::Float64 
 end
@@ -42,19 +50,27 @@ end
     height::T 
     spectral_index::Float64
     number_of_packets::Int
-    num_radial_bins::Int
+    number_of_radial_bins::Int
 end
 
-# function get_runparams(params::RunSet, modelidx, ξidx)
-#     return CameraRunParams(params.models[modelidx], params.inclinations[ξidx], params.number_of_pixels_per_side, params.observation_radius)
-# end
+@with_kw struct CoronaRunSet{M<:AbstractModel,T<:Real} <: AbstractRunSet
+    models::M
+    heights::T 
+    spectral_index::Float64
+    number_of_packets::Int
+    number_of_radial_bins::Int
+end
 
-# function get_runparams(params::CoronaRunSet, modelidx, hidx)
-#     return CoronaRunParams(params.models[modelidx], params.heights[hidx], params.number_of_packets, params.num_radial_bins)
-# end
+function get_run_params(set::CameraRunSet, model_idx::Int, inclination_idx::Int)
+    return CameraRunParams(set.models[model_idx], set.inclinations[inclination_idx], set.number_of_pixels_per_side, set.observation_radius)
+end
 
-primary_parameter(::RunSet) = params.inclinations
-primary_parameter(::CoronaRunSet) = params.heights
+function get_run_params(set::CoronaRunSet, model_idx::Int, height_idx::Int)
+    return CoronaRunParams(set.models[model_idx], set.heights[height_idx], set.number_of_packets, set.number_of_radial_bins)
+end
+
+primary_parameter(set::CameraRunSet) = set.inclinations
+primary_parameter(set::CoronaRunSet) = set.heights
 
 # get_model(params::AbstractRunParams) = params.model
 
@@ -62,18 +78,8 @@ primary_parameter(::CoronaRunSet) = params.heights
 # get_potential(model::BosonStar) = model.potential
 # get_potential(model::BH) = model 
 
-abstract type CollectiveTrait end
-struct IsCollective <: CollectiveTrait end
-struct IsNotCollective <: CollectiveTrait end
-
-iscollective(::AbstractModel) = IsNotCollective()
-iscollective(::SBS{CollectiveId}) = IsCollective()
-iscollective(::LBS{CollectiveId}) = IsCollective()
-iscollective(params::AbstractRunParams) = iscollective(params.model) 
-
-number_of_models(params::AbstractRunParams) = number_of_models(iscollective(params), params.model)
-number_of_models(::IsNotCollective, ::AbstractModel) = 1
-number_of_models(::IsCollective, model::AbstractModel) = length(model.id)
+model_id(params::AbstractRunSet) = params.model.id
+primary_id(params::AbstractRunSet) = (eachindex ∘ primary_parameter)(params)
 
 number_of_inclinations(params::CameraRunParams) = length(params.inclinations)
 number_of_heights(params::CoronRunParams) = length(params.heights)
