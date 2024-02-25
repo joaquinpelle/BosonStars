@@ -7,7 +7,7 @@ to_symbol(::Schwarzschild) = :SCHW
 modeldir(::BosonStar) = "bosonstar"
 modeldir(::Schwarzschild) = "schwarzschild"
 
-function basename(params::RunParams)
+function basename(params::CameraRunParams)
     modelsymbol = to_symbol(params.model)
     ξstr = string(@sprintf("%02d", ξ)) 
     Nstr = string(@sprintf("%04d", number_of_pixels_per_side))
@@ -29,7 +29,7 @@ function basename(runparams::CoronaRunParams)
     return "$(dir)/$(modelsymbol)_h$(hstr)_idx$(istr)"
 end
 
-datafile(runparams::RunParams) = datafile(basename(runparams))
+datafile(runparams::CameraRunParams) = datafile(basename(runparams))
 datafile(runparams::CoronaRunParams) = corona_file(basename(runparams))
 datafile(basename::AbstractString) = "io/$(basename).h5"
 corona_file(basename::AbstractString) = "io/corona/$(basename).txt"

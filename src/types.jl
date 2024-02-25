@@ -1,27 +1,23 @@
-abstract type AbstractPotential end
-
-struct SBS <: AbstractPotential end
-struct LBS <: AbstractPotential end
-
 abstract type AbstractModel end
 
+struct AbstractBosonStar <: AbstractModel end
+
+struct SBS{N} <: AbstractBosonStar end
+struct LBS{N} <: AbstractBosonStar end
 struct Schwarzschild <: AbstractModel end
-struct BosonStar{T<:AbstractPotential, N} <: AbstractModel 
-    potential::T
-end
 
-BosonStar(potential::AbstractPotential, N::Int) = BosonStar{typeof(potential), N}(potential)
-BosonStars(potential::AbstractPotential, Ns) = [BosonStar(potential, N) for N in Ns]
+SBS(N) = SBS{N}()
+LBS(N) = LBS{N}()
 
-@with_kw struct RunParams{M<:AbstractModel,T<:Real}
+abstract type AbstractRunParams end
+abstract type AbstractRunSet end
+
+@with_kw struct RunParams{M<:AbstractModel,T<:Real} <: AbstractRunParams
     model::M
     ξ::T 
     number_of_pixels_per_side::Int 
     observation_radius::Float64 
 end
-
-abstract type AbstractRunSet end
-abstract type AbstractRunParams end
 
 @with_kw struct RunSet{M<:AbstractModel,T<:Real} <: AbstractRunSet
     models::Vector{M}
@@ -35,7 +31,7 @@ end
     height::T 
     spectral_index::Float64
     number_of_packets::Int
-    number_of__radial_bins::Int
+    num_radial_bins::Int
 end
 
 @with_kw struct CoronaRunSet{M<:AbstractModel,T<:Real} <: AbstractRunSet 
@@ -43,7 +39,7 @@ end
     heights::Vector{T} 
     spectral_index::Float64
     number_of_packets::Int
-    number_of__radial_bins::Int
+    num_radial_bins::Int
 end
 
 function create_model_set(;LBS_ids=[], 
@@ -61,7 +57,7 @@ function get_runparams(params::RunSet, modelidx, ξidx)
 end
 
 function get_runparams(params::CoronaRunSet, modelidx, hidx)
-    return RunParams(params.models[modelidx], params.heights[hidx], params.number_of_packets, params.number_of__radial_bins)
+    return RunParams(params.models[modelidx], params.heights[hidx], params.number_of_packets, params.num_radial_bins)
 end
 
 iterated_parameter(::RunSet) = params.inclinations

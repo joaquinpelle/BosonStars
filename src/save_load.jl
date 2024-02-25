@@ -16,6 +16,6 @@ function load_from_hdf5(file, runid::Int)
     return initial_data, output_data, configurations
 end
 
-load_from_hdf5(runparams::RunParams, runid::Int) = load_from_hdf5(datafile(runparams), runid)
+load_from_hdf5(runparams::CameraRunParams, runid::Int) = load_from_hdf5(datafile(runparams), runid)
 
 load_from_file(runparams::CoronaRunParams) = readdlm(datafile(runparams), '\t', Float64, '\n')

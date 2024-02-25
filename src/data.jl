@@ -1,4 +1,4 @@
-function bolometric_intensity_data(runset::RunSet)
+function bolometric_intensity_data(runset::CameraRunSet)
     data = Matrix{Any}(undef, size(runset))
     zmaxcols = zeros_like(runset.inclinations)
     for j in eachindex(runset.inclinations)
@@ -15,7 +15,7 @@ function bolometric_intensity_data(runset::RunSet)
     return data, zmaxcols
 end
 
-function spectrum_data(runset::RunSet, observation_energies)
+function spectrum_data(runset::CameraRunSet, observation_energies)
     data = Matrix{Any}(undef, size(runset))
     for j in eachindex(runset.inclinations)
         for i in eachindex(runset.models)
@@ -38,7 +38,7 @@ function emissivity_profile_data(runset::CoronaRunSet)
     return data
 end
 
-function line_emission_data(runset::RunSet, corona_runset::CoronaRunSet; number_of__energy_bins)
+function line_emission_data(runset::CameraRunSet, corona_runset::CoronaRunSet; number_of__energy_bins)
     have_same_models(runset, corona_runset) || throw(ArgumentError("Runsets must have the same models"))
     data = Array{Any}(undef, size(runset)..., number_of_heights(corona_runset))
     for j in 1:number_of_inclinations(runset)

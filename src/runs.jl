@@ -10,7 +10,7 @@ function make_runs(params::AbstractRunSet;
     end
 end
 
-function make_run(runparams::RunParams;
+function make_run(runparams::CameraRunParams;
                 reltol=1e-6, 
                 abstol=1e-6)
     spacetime = create_spacetime(runparams)

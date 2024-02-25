@@ -1,11 +1,11 @@
-function bolometric_intensity_mosaic(runset::RunSet; zmax, figname)
+function bolometric_intensity_mosaic(runset::CameraRunSet; zmax, figname)
     has_unique_potential(runset) || throw(ArgumentError("The potential is not unique throughout the runset"))
     has_three_inclinations(runset) || throw(ArgumentError("The runset does not contain three inclinations"))
     potential = get_potential(runset, 1)
     bolometric_intensity_mosaic(runset, potential; zmax=zmax, figname=figname)
 end
 
-function bolometric_intensity_mosaic(runset::RunSet, potential::Union{SBS,LBS}; zmax, figname)
+function bolometric_intensity_mosaic(runset::CameraRunSet, potential::Union{SBS,LBS}; zmax, figname)
     has_three_models(runset) || throw(ArgumentError("The runset does not contain three models"))
     data, zmaxcols = bolometric_intensity_data(runset)
     fig, axes = prepare_mosaic(nrows=3, size=(800, 800))
@@ -77,7 +77,7 @@ function bolometric_intensity_mosaic(runset::RunSet, potential::Union{SBS,LBS}; 
     save(figname, fig, pt_per_unit = 0.5)
 end
 
-function bolometric_intensity_mosaic(runset::RunSet, potential::Schwarzschild; zmax, figname)
+function bolometric_intensity_mosaic(runset::CameraRunSet, potential::Schwarzschild; zmax, figname)
     has_one_model(runset) || throw(ArgumentError("The runset does not contain one model"))
     data, zmaxcols = bolometric_intensity_data(runset)
     fig, axes = prepare_mosaic(nrows=1, size=(900, 400))
@@ -149,7 +149,7 @@ function bolometric_intensity_mosaic(runset::RunSet, potential::Schwarzschild; z
     save(figname, fig, pt_per_unit = 0.5)
 end
 
-function spectrum_mosaic(LBSrunset::RunSet, SBSrunset::RunSet, BHrunset::RunSet; observation_energies, figname)
+function spectrum_mosaic(LBSrunset::CameraRunSet, SBSrunset::CameraRunSet, BHrunset::CameraRunSet; observation_energies, figname)
     runsets = [LBSrunset, SBSrunset, BHrunset]
     have_unique_potentials(runsets) || throw(ArgumentError("Runsets must have unique potentials")) 
     have_three_inclinations(runsets) || throw(ArgumentError("Runsets must have three inclinations")) 
@@ -390,7 +390,7 @@ function emissiviy_profile_mosaic_focused(SBSrunset::CoronaRunSet, BHrunset::Cor
     save(figname, fig)
 end
 
-function line_emission_mosaic(SBSrunset::RunSet, BHrunset::RunSet, SBScorona_runset::CoronaRunSet, BHcorona_runset::CoronaRunSet; number_of__energy_bins, figname)
+function line_emission_mosaic(SBSrunset::CameraRunSet, BHrunset::CameraRunSet, SBScorona_runset::CoronaRunSet, BHcorona_runset::CoronaRunSet; number_of__energy_bins, figname)
 
     runsets = [SBSrunset, BHrunset, SBScorona_runset, BHcorona_runset]
     have_unique_potentials(runsets) || throw(ArgumentError("Runsets must have unique potentials")) 

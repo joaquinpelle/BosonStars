@@ -43,7 +43,7 @@ end
 model_label(::Schwarzschild) = L"\text{BH}"
 model_labels(runset::AbstractRunSet) = [model_label(model) for model in runset.models]
 
-function get_inclination_labels(runset::RunSet)
+function get_inclination_labels(runset::CameraRunSet)
     return [L"\xi = %$(xi)^\circ" for xi in runset.inclinations]
 end
 

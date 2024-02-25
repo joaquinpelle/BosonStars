@@ -1,4 +1,4 @@
-function zextrema(runsets::Vector{RunSet})
+function zextrema(runsets::Vector{CameraRunSet})
     zmin, zmax = Inf, -Inf
     for runset in runsets
         zminv, zmaxv = zextrema(runset)
@@ -8,7 +8,7 @@ function zextrema(runsets::Vector{RunSet})
     return zmin, zmax
 end
 
-function zextrema(runset::RunSet)
+function zextrema(runset::CameraRunSet)
     zmin, zmax = Inf, -Inf
     for i in eachindex(runset.models)
         for j in eachindex(runset.inclinations)
@@ -21,7 +21,7 @@ function zextrema(runset::RunSet)
     return zmin, zmax
 end
 
-function zextrema(runset::RunSet, j::Int)
+function zextrema(runset::CameraRunSet, j::Int)
     zmin = Inf
     zmax = -Inf
     for i in eachindex(runset.models)
@@ -33,7 +33,7 @@ function zextrema(runset::RunSet, j::Int)
     return zmin, zmax
 end
 
-function zextrema(runparams::RunParams)
+function zextrema(runparams::CameraRunParams)
     initial_data, output_data, configurations = load_from_hdf5(runparams, 1)
     Iobs = observed_bolometric_intensities(initial_data, output_data, configurations)
     return extrema(Iobs)
