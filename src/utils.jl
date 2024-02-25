@@ -30,7 +30,7 @@ size(runset::AbstractRunSet) = (length(runset.models), length(iterated_parameter
 colorbar_label() = L"I/I_{\text{max}}"
 get_cbar_ticks(::LBS) = [[0.0,0.02,0.05],[0.0, 0.1, 0.2],[0.0, 0.5, 1.0]]
 get_cbar_ticks(::SBS) = [[0.0,0.002,0.004],[0.0, 0.005, 0.01, 0.015],[0.01, 0.02, 0.03]]
-get_cbar_ticks(::Schwarzschild) = [[0.0,0.002,0.004],[0.0, 0.005, 0.01, 0.015],[0.01, 0.02, 0.03]]
+get_cbar_ticks(::BH) = [[0.0,0.002,0.004],[0.0, 0.005, 0.01, 0.015],[0.01, 0.02, 0.03]]
 
 xaxis_label() = L"\alpha \, [^\circ]"
 yaxis_label() = L"\beta \, [^\circ]"
@@ -40,7 +40,7 @@ function model_label(model::BosonStar)
     return L"\text{%$(symbol)}"
 end
 
-model_label(::Schwarzschild) = L"\text{BH}"
+model_label(::BH) = L"\text{BH}"
 model_labels(runset::AbstractRunSet) = [model_label(model) for model in runset.models]
 
 function get_inclination_labels(runset::CameraRunSet)

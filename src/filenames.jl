@@ -2,10 +2,10 @@ to_string(potential::SBS) = "SBS"
 to_string(potential::LBS) = "LBS"
 to_symbol(potential::AbstractPotential) = (Symbol ∘ to_string)(potential)
 to_symbol(model::BosonStar) = Symbol(to_string(model.potential), model.id)
-to_symbol(::Schwarzschild) = :SCHW
+to_symbol(::BH) = :SCHW
 
 modeldir(::BosonStar) = "bosonstar"
-modeldir(::Schwarzschild) = "schwarzschild"
+modeldir(::BH) = "schwarzschild"
 
 function basename(params::CameraRunParams)
     modelsymbol = to_symbol(params.model)

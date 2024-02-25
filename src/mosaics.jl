@@ -77,7 +77,7 @@ function bolometric_intensity_mosaic(runset::CameraRunSet, potential::Union{SBS,
     save(figname, fig, pt_per_unit = 0.5)
 end
 
-function bolometric_intensity_mosaic(runset::CameraRunSet, potential::Schwarzschild; zmax, figname)
+function bolometric_intensity_mosaic(runset::CameraRunSet, potential::BH; zmax, figname)
     has_one_model(runset) || throw(ArgumentError("The runset does not contain one model"))
     data, zmaxcols = bolometric_intensity_data(runset)
     fig, axes = prepare_mosaic(nrows=1, size=(900, 400))
@@ -200,7 +200,7 @@ function spectrum_mosaic(LBSrunset::CameraRunSet, SBSrunset::CameraRunSet, BHrun
             lines!(ax, erg_to_eV(obs_energies), eV_to_erg(FLBS); linewidth=2.0, color=colors[i], linestyle=:dot, label=LBSmodel_labels[i])
         end
         FBH = BHdata[1,j]
-        lines!(ax, erg_to_eV(obs_energies), eV_to_erg(FBH); linewidth=2.0, color=:black, linestyle=:solid, label=model_label(Schwarzschild()))
+        lines!(ax, erg_to_eV(obs_energies), eV_to_erg(FBH); linewidth=2.0, color=:black, linestyle=:solid, label=model_label(BH()))
         ylims!(ax, 1e5, 1e16)
         ax.xscale = log10
         ax.yscale = log10
@@ -278,7 +278,7 @@ function emissiviy_profile_mosaic(LBSrunset::CoronaRunSet, SBSrunset::CoronaRunS
             lines!(ax, data[:,1], data[:,2]; linewidth=2.0, color=colors[i], linestyle=:dot, label=LBSmodel_labels[i])
         end
         data = BHdata[1,j]
-        lines!(ax, data[:,1], data[:,2]; linewidth=2.0, color=:black, linestyle=:solid, label=model_label(Schwarzschild()))
+        lines!(ax, data[:,1], data[:,2]; linewidth=2.0, color=:black, linestyle=:solid, label=model_label(BH()))
         ylims!(ax, 1e-7, 1e-1)
         xlims!(ax, nothing, 110.0)
         ax.xscale = log10
@@ -363,7 +363,7 @@ function emissiviy_profile_mosaic_focused(SBSrunset::CoronaRunSet, BHrunset::Cor
             lines!(ax, data[:,1], data[:,2]; linewidth=2.0, color=colors[i], linestyle=:dot, label=SBSmodel_labels[i])
         end
         data = BHdata[1,j]
-        lines!(ax, data[:,1], data[:,2]; linewidth=2.0, color=:black, linestyle=:solid, label=model_label(Schwarzschild()))
+        lines!(ax, data[:,1], data[:,2]; linewidth=2.0, color=:black, linestyle=:solid, label=model_label(BH()))
         ylims!(ax, 1e-5, nothing)
         xlims!(ax, 5.0, 21.0)
         # ax.xscale = log10
@@ -419,7 +419,7 @@ function line_emission_mosaic(SBSrunset::CameraRunSet, BHrunset::CameraRunSet, S
             end
             binned_fluxes, bins_edges = BHdata[i,j,k]
             fmax = maximum(binned_fluxes)
-            lines!(axes[k,j], midpoints(bins_edges), binned_fluxes/fmax; linewidth=2.0, color=:black, linestyle=:solid, label=model_label(Schwarzschild()))
+            lines!(axes[k,j], midpoints(bins_edges), binned_fluxes/fmax; linewidth=2.0, color=:black, linestyle=:solid, label=model_label(BH()))
         end
     end
 

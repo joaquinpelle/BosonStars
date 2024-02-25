@@ -1,6 +1,6 @@
 abstract type AbstractModel end
 abstract type AbstractBosonStar <: AbstractModel end
-struct Schwarzschild <: AbstractModel end
+struct BH <: AbstractModel end
 
 CollectiveId = Union{AbstractVector{Int},AbstractRange{Int}}
 
@@ -60,7 +60,7 @@ end
 
 # get_potential(runset::RunSet, modelidx::Int) = get_potential(runset.models[modelidx])
 # get_potential(model::BosonStar) = model.potential
-# get_potential(model::Schwarzschild) = model 
+# get_potential(model::BH) = model 
 
 number_of_models(params::AbstractRunParams) = isa(runset.model.id, Int) ? 1 : length(runset.model)
 number_of_inclinations(params::CameraRunParams) = length(runset.inclinations)
