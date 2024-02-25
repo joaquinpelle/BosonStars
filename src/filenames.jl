@@ -9,14 +9,14 @@ modeldir(::Schwarzschild) = "schwarzschild"
 
 function basename(params::CameraRunParams)
     modelsymbol = to_symbol(params.model)
-    ξstr = string(@sprintf("%02d", ξ)) 
+    ξstr = string(@sprintf("%02d", inclination)) 
     Nstr = string(@sprintf("%04d", number_of_pixels_per_side))
     return "$(modelsymbol)_i$(ξstr)deg_N$(Nstr)"
 end
 
 function basename(params::CoronaRunParams)
     modelsymbol = to_symbol(params.model)
-    ξstr = string(@sprintf("%02d", ξ)) 
+    ξstr = string(@sprintf("%02d", inclination)) 
     Nstr = string(@sprintf("%04d", number_of_pixels_per_side))
     return "$(modelsymbol)_i$(ξstr)deg_N$(Nstr)"
 end
