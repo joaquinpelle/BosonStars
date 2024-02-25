@@ -1,18 +1,17 @@
-function make_runs(params::AbstractRunSet; 
+function make_runs(runset::AbstractRunSet;
                 reltol, 
                 abstol)
-    for i in eachindex(params.models)
-        var = iterated_parameter(params)
-        for j in eachindex(var)
-            runparams = get_runparams(params, i, j)
+    for i in model_id(runset)
+        for j in primary_id(runset)
+            runparams = get_runparams(runset, i, j)
             make_run(runparams; reltol=reltol, abstol=abstol)
         end
     end
 end
 
 function make_run(runparams::CameraRunParams;
-                reltol=1e-6, 
-                abstol=1e-6)
+                reltol, 
+                abstol)
     spacetime = create_spacetime(runparams)
     disk = create_accretion_disk(runparams)
     camera = create_camera(runparams)
