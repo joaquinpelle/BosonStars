@@ -53,8 +53,8 @@ end
 #     return CoronaRunParams(params.models[modelidx], params.heights[hidx], params.number_of_packets, params.num_radial_bins)
 # end
 
-# iterated_parameter(::RunSet) = params.inclinations
-# iterated_parameter(::CoronaRunSet) = params.heights
+iterated_parameter(::RunSet) = params.inclinations
+iterated_parameter(::CoronaRunSet) = params.heights
 
 # get_model(params::AbstractRunParams) = params.model
 
@@ -62,6 +62,18 @@ end
 # get_potential(model::BosonStar) = model.potential
 # get_potential(model::BH) = model 
 
-number_of_models(params::AbstractRunParams) = isa(runset.model.id, Int) ? 1 : length(runset.model)
-number_of_inclinations(params::CameraRunParams) = length(runset.inclinations)
-number_of_heights(oarans::CoronRunParams) = length(runset.heights)
+abstract type CollectiveTrait end
+struct IsCollective <: CollectiveTrait end
+struct IsNotCollective <: CollectiveTrait end
+
+iscollective(::AbstractModel) = IsNotCollective()
+iscollective(::SBS{CollectiveId}) = IsCollective()
+iscollective(::LBS{CollectiveId}) = IsCollective()
+iscollective(params::AbstractRunParams) = iscollective(params.model) 
+
+number_of_models(params::AbstractRunParams) = number_of_models(iscollective(params), params.model)
+number_of_models(::IsNotCollective, ::AbstractModel) = 1
+number_of_models(::IsCollective, model::AbstractModel) = length(model.id)
+
+number_of_inclinations(params::CameraRunParams) = length(params.inclinations)
+number_of_heights(params::CoronRunParams) = length(params.heights)
