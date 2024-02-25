@@ -1,12 +1,16 @@
-inner_radius(::SBS{1}) = 6.8
-inner_radius(::SBS{2}) = 6.2
-inner_radius(::SBS{3}) = 6.1
+function inner_radius(model::SBS{Int}) 
+    model.id == 1 && return 6.8
+    model.id == 2 && return 6.2
+    model.id == 3 && return 6.1
+end
 inner_radius(::LBS) = 0.1
 innter_radius(::BH) = 6.0
 
-outer_radius(::SBS{1}) = 79.8
-outer_radius(::SBS{2}) = 79.7
-outer_radius(::SBS{3}) = 79.6
+function outer_radius(model::SBS{Int}) 
+    model.id == 1 && return 79.8
+    model.id == 2 && return 79.7
+    model.id == 3 && return 79.6
+end
 outer_radius(::LBS) = 79.6
 outer_radius(::BH) = 80.0
 
