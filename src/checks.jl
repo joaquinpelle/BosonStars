@@ -22,7 +22,7 @@ have_one_model(runsets::Vector{T}) where {T<:AbstractRunSet} = all(has_one_model
 
 have_three_inclinations(runsets::Vector{RunSet}) = all(has_three_inclinations, runsets)
 have_same_inclinations(runsets::Vector{RunSet}) = all(r -> r.inclinations == runsets[1].inclinations, runsets)
-have_three_heights(runsets::Vector{CoronRunSet}) = all(has_three_heights, runsets)
+have_three_heights(runsets::Vector{CoronaRunSet}) = all(has_three_heights, runsets)
 have_same_heights(runsets::Vector{CoronaRunSet}) = all(r -> r.heights == runsets[1].heights, runsets)
 have_same_models(runsets::Vector{T}) where {T<:AbstractRunSet} = all(r -> r.models == runsets[1].models, runsets)
 

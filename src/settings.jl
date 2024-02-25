@@ -18,7 +18,7 @@ camera_aperture(::Schwarzschild) = 4.5
 observation_position(params::RunParams) = [0.0, params.observation_radius, deg2rad(params.ξ), 0.0]
 
 cbp_kwargs(runparams::AbstractRunParams) = cbp_kwargs(runparams.model)   
-cbp_kwargs(::Scbwarzschild) = (rhorizon_bound=1e-3,)
+cbp_kwargs(::Schwarzschild) = (rhorizon_bound=1e-3,)
 cbp_kwargs(::BosonStar) = ()
 
 create_spacetime(params::RunParams) = create_spacetime(params.model)

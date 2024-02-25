@@ -419,7 +419,7 @@ function line_emission_mosaic(SBSrunset::RunSet, BHrunset::RunSet, SBScorona_run
             end
             binned_fluxes, bins_edges = BHdata[i,j,k]
             fmax = maximum(binned_fluxes)
-            lines!(axes[k,j], midpoints(bins_edges), binned_fluxes/fmax; linewidth=2.0, color=:black, linestyle=:solid, label=model_label(Schwarzschild())
+            lines!(axes[k,j], midpoints(bins_edges), binned_fluxes/fmax; linewidth=2.0, color=:black, linestyle=:solid, label=model_label(Schwarzschild()))
         end
     end
 

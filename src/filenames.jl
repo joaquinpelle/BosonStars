@@ -3,22 +3,21 @@ to_string(potential::LBS) = "LBS"
 to_symbol(potential::AbstractPotential) = (Symbol ∘ to_string)(potential)
 to_symbol(model::BosonStar) = Symbol(to_string(model.potential), model.id)
 to_symbol(::Schwarzschild) = :SCHW
-to_string(i::Int; d) = string(@sprintf("%0$(d)d", i))
 
 modeldir(::BosonStar) = "bosonstar"
 modeldir(::Schwarzschild) = "schwarzschild"
 
 function basename(params::RunParams)
     modelsymbol = to_symbol(params.model)
-    ξstr = to_string(params.ξ)
-    Nstr = to_string(params.Nres)
+    ξstr = string(@sprintf("%02d", ξ)) 
+    Nstr = string(@sprintf("%04d", Nres))
     return "$(modelsymbol)_i$(ξstr)deg_N$(Nstr)"
 end
 
 function basename(params::CoronaRunParams)
     modelsymbol = to_symbol(params.model)
-    ξstr = to_string(params.ξ)
-    Nstr = to_string(params.Nres)
+    ξstr = string(@sprintf("%02d", ξ)) 
+    Nstr = string(@sprintf("%04d", Nres))
     return "$(modelsymbol)_i$(ξstr)deg_N$(Nstr)"
 end
 

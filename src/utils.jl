@@ -35,7 +35,7 @@ get_cbar_ticks(::Schwarzschild) = [[0.0,0.002,0.004],[0.0, 0.005, 0.01, 0.015],[
 xaxis_label() = L"\alpha \, [^\circ]"
 yaxis_label() = L"\beta \, [^\circ]"
 
-function model_label(model::BosonStar{P,N})
+function model_label(model::BosonStar)
     symbol = to_symbol(model)
     return L"\text{%$(symbol)}"
 end
