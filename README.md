@@ -1,5 +1,9 @@
 # BosonStars
 
+<div align="center">
+  <img src="./plots/assets/SBS_mosaic.png" alt="Skylight Logo" width="600"/>
+</div>
+
 Production runs and plots for the preprint ["Thermal emission and line broadening from accretion disks around boson stars"](https://arxiv.org/) by J. L. Rosa, J. Pelle, and D. Perez.
 
 The code uses the open-source Julia package [Skylight.jl](https://github.com/joaquinpelle/Skylight.jl) for general-relativistic ray tracing and radiative transfer in arbitrary spacetimes.   
