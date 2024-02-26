@@ -40,7 +40,7 @@ end
 
 @with_kw struct CameraRunSet{M<:AbstractModel,T<:Real} <: AbstractRunSet
     models::M
-    inclinations::T 
+    inclinations::Vector{T} 
     number_of_pixels_per_side::Int 
     observation_radius::Float64 
 end
@@ -55,31 +55,37 @@ end
 
 @with_kw struct CoronaRunSet{M<:AbstractModel,T<:Real} <: AbstractRunSet
     models::M
-    heights::T 
+    heights::Vector{T} 
     spectral_index::Float64
     number_of_packets::Int
     number_of_radial_bins::Int
 end
 
-function get_run_params(set::CameraRunSet, model_idx::Int, inclination_idx::Int)
+function get_runparams(set::CameraRunSet, model_idx::Int, inclination_idx::Int)
     return CameraRunParams(set.models[model_idx], set.inclinations[inclination_idx], set.number_of_pixels_per_side, set.observation_radius)
 end
 
-function get_run_params(set::CoronaRunSet, model_idx::Int, height_idx::Int)
+function get_runparams(set::CoronaRunSet, model_idx::Int, height_idx::Int)
     return CoronaRunParams(set.models[model_idx], set.heights[height_idx], set.number_of_packets, set.number_of_radial_bins)
 end
 
 primary_parameter(set::CameraRunSet) = set.inclinations
 primary_parameter(set::CoronaRunSet) = set.heights
 
-# get_model(params::AbstractRunParams) = params.model
+abstract type CollectiveTrait end
+struct IsCollective <: CollectiveTrait end
+struct IsNotCollective <: CollectiveTrait end
 
-# get_potential(runset::RunSet, modelidx::Int) = get_potential(runset.models[modelidx])
-# get_potential(model::BosonStar) = model.potential
-# get_potential(model::BH) = model 
+iscollective(::AbstractModel) = IsNotCollective()
+iscollective(::SBS{T}) where {T<:CollectiveId} = IsCollective()
+iscollective(::LBS{T}) where {T<:CollectiveId} = IsCollective()
+iscollective(runset::AbstractRunSet) = iscollective(runset.models)
 
-model_id(params::AbstractRunSet) = params.model.id
-primary_id(params::AbstractRunSet) = (eachindex ∘ primary_parameter)(params)
+model_id(runset::AbstractRunSet) = model_id(iscollective(runset), runset) 
+model_id(::IsNotCollective, runset::AbstractRunSet) = 1:1
+model_id(::IsCollective, runset::AbstractRunSet) = runset.models.id
+
+primary_id(runset::AbstractRunSet) = (eachindex ∘ primary_parameter)(runset)
 
 number_of_inclinations(params::CameraRunParams) = length(params.inclinations)
-number_of_heights(params::CoronRunParams) = length(params.heights)
+number_of_heights(params::CoronaRunParams) = length(params.heights)
