@@ -25,11 +25,11 @@ cbp_kwargs(runparams::AbstractRunParams) = cbp_kwargs(runparams.model)
 cbp_kwargs(::BH) = (rhorizon_bound=1e-3,)
 cbp_kwargs(::AbstractBosonStar) = ()
 
-create_spacetime(params::CameraRunParams) = create_spacetime(params.model)
+create_spacetime(params::AbstractRunParams) = create_spacetime(params.model)
 create_spacetime(model::AbstractBosonStar) = BosonStarSpacetime(to_symbol(model))
 create_spacetime(::BH) = SchwarzschildSpacetimeSphericalCoordinates(M=1.0)
 
-create_accretion_disk(params::CameraRunParams) = create_accretion_disk(params.model)
+create_accretion_disk(params::AbstractRunParams) = create_accretion_disk(params.model)
 function create_accretion_disk(model::AbstractModel)
     AccretionDiskWithTabulatedTemperature(inner_radius = inner_radius(model), outer_radius = outer_radius(model), filename = temperature_file(model))
 end
@@ -37,9 +37,9 @@ function create_line_emission_disk(params::CoronaRunParams)
     Skylight.AccretionDiskWithTabulatedProfile(inner_radius = inner_radius(params.model), outer_radius = outer_radius(params.model), filename = datafile(params))
 end
 
-create_plane(params::CameraRunParams) = create_plane(params.model)
+create_plane(params::AbstractRunParams) = create_plane(params.model)
 create_plane(model::BH) = NovikovThorneDisk(inner_radius = event_horizon_radius(create_spacetime(model))+1e-3+eps(), outer_radius = 100.0)
-create_plane(::AbstractBosonStar) = NovikovThorneDisk(inner_radius = 0.0, outer_radius = outer_radius(model))
+create_plane(model::AbstractBosonStar) = NovikovThorneDisk(inner_radius = 0.0, outer_radius = outer_radius(model))
 
 create_corona(params::CoronaRunParams) = LamppostCorona(height=params.height, theta_offset=1e-5, spectral_index = params.spectral_index)
 
