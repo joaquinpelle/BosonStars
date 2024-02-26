@@ -1,6 +1,6 @@
-to_string(::SBS{Int}) = "SBS$(model.id)"
-to_string(::LBS{Int}) = "LBS$(model.id)"
-to_symbol(model::SBS{Int}) = (Symbol ∘ to_string)(model)
+to_string(model::SBS{Int}) = "SBS$(model.id)"
+to_string(model::LBS{Int}) = "LBS$(model.id)"
+to_symbol(model::AbstractBosonStar) = (Symbol ∘ to_string)(model)
 to_symbol(::BH) = :SCHW
 
 modeldir(::AbstractBosonStar) = "bosonstar"
