@@ -51,3 +51,10 @@ function create_camera(params::CameraRunParams)
                 horizontal_number_of_pixels = params.number_of_pixels_per_side,
                 vertical_number_of_pixels = params.number_of_pixels_per_side) 
 end
+
+function replace_radiative_model(configurations, new_radiative_model)
+    return VacuumOTEConfigurations(spacetime = configurations.spacetime,
+                                camera = configurations.camera,
+                                radiative_model = new_radiative_model,
+                                unit_mass_in_solar_masses = configurations.unit_mass_in_solar_masses)
+end
