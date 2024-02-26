@@ -1,11 +1,3 @@
-using Pkg 
-Pkg.activate("BosonStars")
-using Parameters
-using CairoMakie
-using Printf
-using Colors
-using DelimitedFiles
-using Skylight
 include("src/BosonStars.jl")
 
 LBSmodels = LBS(1:3)
