@@ -116,7 +116,7 @@ function bolometric_intensity_mosaic(runset::CameraRunSet, model::BH; zmax, fign
 
     #Make left ylabel visible again to use as model label
     axleft.ylabelvisible = true
-    axleft.ylabel = model_label(runset.model)
+    axleft.ylabel = model_label(model)
     axleft.ylabelsize = 18
 
     for k in 1:3
