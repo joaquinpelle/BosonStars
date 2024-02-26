@@ -65,12 +65,12 @@ function get_runparams(set::CameraRunSet, model_idx::Int, inclination_idx::Int)
     return CameraRunParams(set.models[model_idx], set.inclinations[inclination_idx], set.number_of_pixels_per_side, set.observation_radius)
 end
 
-function get_runparams(set::CoronaRunSet, model_idx::Int, height_idx::Int)
-    return CoronaRunParams(set.models[model_idx], set.heights[height_idx], set.number_of_packets, set.number_of_radial_bins)
+function get_runparams(runset::CoronaRunSet, model_idx::Int, height_idx::Int)
+    return CoronaRunParams(runset.models[model_idx], runset.heights[height_idx], runset.spectral_index, runset.number_of_packets, runset.number_of_radial_bins)
 end
 
-primary_parameter(set::CameraRunSet) = set.inclinations
-primary_parameter(set::CoronaRunSet) = set.heights
+primary_parameter(runset::CameraRunSet) = runset.inclinations
+primary_parameter(runset::CoronaRunSet) = runset.heights
 
 abstract type CollectiveTrait end
 struct IsCollective <: CollectiveTrait end
