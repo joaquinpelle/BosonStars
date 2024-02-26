@@ -1,7 +1,3 @@
-get_cbar_ticks(::LBS) = [[0.0,0.02,0.05],[0.0, 0.1, 0.2],[0.0, 0.5, 1.0]]
-get_cbar_ticks(::SBS) = [[0.0,0.002,0.004],[0.0, 0.005, 0.01, 0.015],[0.01, 0.02, 0.03]]
-get_cbar_ticks(::BH) = [[0.0,0.0005,0.0015],[0.0, 0.002, 0.004],[0.0, 0.004, 0.008]]
-
 alpha_label() = L"\alpha \, [^\circ]"
 beta_label() = L"\beta \, [^\circ]"
 radius_label() = L"r / r_g"
@@ -26,3 +22,7 @@ end
 function get_inclination_labels(runset::CameraRunSet)
     return [L"\xi = %$(xi)^\circ" for xi in runset.inclinations]
 end
+
+get_cbar_ticks(::LBS) = [[0.0,0.02,0.05],[0.0, 0.1, 0.2],[0.0, 0.5, 1.0]]
+get_cbar_ticks(::SBS) = [[0.0,0.002,0.004],[0.0, 0.005, 0.01, 0.015],[0.01, 0.02, 0.03]]
+get_cbar_ticks(::BH) = [[0.0,0.0005,0.0015],[0.0, 0.002, 0.004],[0.0, 0.004, 0.008]]
