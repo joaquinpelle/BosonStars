@@ -1,6 +1,6 @@
 include("types.jl")
-include("runsets.jl")
 include("iterators.jl")
+include("runsets.jl")
 include("settings.jl")
 include("transfer.jl")
 include("save_load.jl")

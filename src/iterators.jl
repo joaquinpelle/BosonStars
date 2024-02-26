@@ -35,5 +35,4 @@ Base.getindex(m::AbstractModel, i::Int) = Base.getindex(iscollective(m), m, i)
 Base.getindex(::IsCollective, m::SBS, i::Int) = SBS(m.id[i])
 Base.getindex(::IsCollective, m::LBS, i::Int) = LBS(m.id[i])
 Base.getindex(::IsNotCollective, m::AbstractModel, i) = m
-
 Base.size(m::AbstractBosonStar) = Base.size(m.id)
