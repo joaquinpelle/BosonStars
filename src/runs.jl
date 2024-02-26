@@ -1,3 +1,9 @@
+function make_runs(runsets::Vector{T}; reltol, abstol) where {T<:AbstractRunSet}
+    for runset in runsets
+        make_runs(runset; reltol=reltol, abstol=abstol)
+    end
+end
+
 function make_runs(runset::AbstractRunSet;
                 reltol, 
                 abstol)
@@ -45,7 +51,7 @@ function make_run(runparams::CoronaRunParams;
     cbp = callback_parameters(spacetime, plane, configurations; cbp_kwargs(runparams)...)
     sim = integrate(initial_data, configurations, cb, cbp; method=VCABM(), reltol=reltol, abstol=abstol)
     output_data = sim.output_data
-    I, bins_edges = emissivity_profile(output_data, spacetime, disk, corona; number_of__radial_bins = runparams.number_of__radial_bins)
+    I, bins_edges = emissivity_profile(output_data, spacetime, disk, corona; number_of_radial_bins = runparams.number_of_radial_bins)
     name = basename(runparams)
     save_profile(I, bins_edges; filename = corona_file(name))
     finished_run_message(name)
