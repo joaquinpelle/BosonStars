@@ -6,7 +6,7 @@ The code uses the open-source Julia package [Skylight.jl](https://github.com/joa
 
 If you find this code useful for your own work, we kindly request to cite our paper.
 
-#### Requirements
+### Requirements
 
 The code requires to have the following Julia packages installed:
 
@@ -15,9 +15,9 @@ The code requires to have the following Julia packages installed:
 - DelimitedFiles
 - Parameters
 - Printf
-- Skylight (see installation guide [here](https://joaquinpelle.github.io/Skylight.jl/dev/))
+- Skylight 
 
-#### Installation
+### Installation
 We recommend to create a dedicated Pkg environment for this project. You can do so with the following steps:
 
 1. Clone the repository to your local machine
@@ -30,17 +30,17 @@ We recommend to create a dedicated Pkg environment for this project. You can do 
 8. Install the registered packages by typing `Pkg.add("CairoMakie")`, `Pkg.add("Colors")`, `Pkg.add("DelimitedFiles")`, `Pkg.add("Parameters")`, and `Pkg.add("Printf")`
 9. Install Skylight following the instructions [here](https://joaquinpelle.github.io/Skylight.jl/dev/)
 
-#### How to run the code
+### How to run the code
 
 The `main.jl` contains a complete example with the parameters used in the paper. You can run it by simply typing `julia main.jl` in the terminal. Or, from the Julia REPL `include("main.jl")` after activating the Pkg project with the required packages. The simulation data is saved in the `io` folder, whereas the resulting plots will be saved in the `plots` folder. The plotting functions can be run independently of the simulations once the data has been saved, as for example in the `plots.jl` file.
 
-#### Plot settings
+### Plot settings
 Keep in mind that most of the plot settings are tailored for the production runs of the paper. These settings, like axes scales, axes limits, colorbar ticks, etc. are set inside the corresponding mosaic functions in the `mosaics.jl` file. You may need to customize the values from there to fit your needs.
 
-#### SLURM batch submission
+### SLURM batch submission
 There is also an example SLURM batch submission file, used for running this code on the Serafin supercomputer at [Centro de Computo de Alto Desempeño](https://ccad.unc.edu.ar/), Universidad Nacional de Cordoba. The standard output and error files are directed to the `logs` folder.
 
-#### Questions and issues
+### Questions and issues
 
 If you have any questions or issues, please do not hesitate to contact the repository owner or open an issue in this repository.
 
