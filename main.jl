@@ -27,7 +27,7 @@ BHrunset = CameraRunSet(models = BHmodel,
                     number_of_pixels_per_side = 1200,
                     observation_radius = 1000.0)
 
-make_runs([LBSrunset, SBSrunset, BHrunset]; reltol=1e-6, abstol=1e-6)
+radiative_transfer([LBSrunset, SBSrunset, BHrunset]; reltol=1e-6, abstol=1e-6)
 
 LBScorona_runset = CoronaRunSet(models = LBSmodels,
                     heights = [2.5, 5.0, 10.0],
@@ -47,7 +47,7 @@ BHcorona_runset = CoronaRunSet(models = BHmodel,
                     number_of_packets = 5000000,
                     number_of_radial_bins = 50)
 
-make_runs([LBScorona_runset, SBScorona_runset, BHcorona_runset]; reltol=1e-5, abstol=1e-5)
+radiative_transfer([LBScorona_runset, SBScorona_runset, BHcorona_runset]; reltol=1e-5, abstol=1e-5)
 
 _, zmax = zextrema([LBSrunset, SBSrunset, BHrunset])
 bolometric_intensity_mosaic(LBSrunset; zmax = zmax, figname = "plots/LBS_mosaic.pdf")

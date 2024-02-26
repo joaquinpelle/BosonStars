@@ -1,17 +1,3 @@
-function replace_radiative_model(configurations, new_radiative_model)
-    return VacuumOTEConfigurations(spacetime = configurations.spacetime,
-                                camera = configurations.camera,
-                                radiative_model = new_radiative_model,
-                                unit_mass_in_solar_masses = configurations.unit_mass_in_solar_masses)
-end
-
-function flat_lamppost(r, h)
-    return h/(r^2+h^2)^(3/2)
-end
-
-finished_run_message(runparams::AbstractRunParams) = finished_run_message(basename(runparams))
-finished_run_message(name::AbstractString) = println("Finished run: $name")
-
 function prepare_mosaic(; nrows, size)
     paxes = Matrix{Axis}(undef, nrows, 3)
     set_theme!(; fonts = (; regular = "Times New Roman"))
@@ -26,39 +12,9 @@ function rescale_axes(xs, ys)
     return xs, ys
 end
 
-size(runset::AbstractRunSet) = (length(model_id(runset)), length(primary_parameter(runset)))
-
-intensity_label() = L"I/I_{\text{max}}"
 get_cbar_ticks(::LBS) = [[0.0,0.02,0.05],[0.0, 0.1, 0.2],[0.0, 0.5, 1.0]]
 get_cbar_ticks(::SBS) = [[0.0,0.002,0.004],[0.0, 0.005, 0.01, 0.015],[0.01, 0.02, 0.03]]
-get_cbar_ticks(::BH) = [[0.0,0.002,0.004],[0.0, 0.005, 0.01, 0.015],[0.01, 0.02, 0.03]]
-
-alpha_label() = L"\alpha \, [^\circ]"
-beta_label() = L"\beta \, [^\circ]"
-
-model_label(model::SBS{Int}) = L"\text{SBS%$(model.id)}"
-model_label(model::LBS{Int}) = L"\Lambda \text{BS%$(model.id)}"
-model_label(::BH) = L"\text{BH}"
-
-height_label(h) = floor(h) == h ? L"h = %$(Int(h)) M" : L"h = %$(h) M"
-
-get_model_labels(runset::AbstractRunSet) = [model_label(model) for model in runset.models]
-
-function get_inclination_labels(runset::CameraRunSet)
-    return [L"\xi = %$(xi)^\circ" for xi in runset.inclinations]
-end
-
-function get_height_labels(runset::CoronaRunSet)
-    return [L"h = %$(h) M" for h in runset.heights]
-end
-
-thermal_emission_energy_label() = L"E \, [\text{eV}]"
-line_emission_energy_label() = L"E / E_0"
-radius_label() = L"r / r_g"
-thermal_emission_flux_label() = L"F_E \,[\text{erg} \, \text{cm}^{-2} \, \text{s}^{-1}\,\text{eV}^{-1}]"
-line_emission_flux_label() = L"\text{Flux} \, [\text{arbitrary}]"
-emissivity_label() = L"\varepsilon (r) \, \, [\text{arbitrary}]"
-flat_lamppost_label() = L"I_e(r,h)"
+get_cbar_ticks(::BH) = [[0.0,0.0005,0.0015],[0.0, 0.002, 0.004],[0.0, 0.004, 0.008]]
 
 function mylimits!(ax; lim=30)
     limits!(ax, -lim, lim, -lim, lim)
@@ -85,4 +41,11 @@ function julia_color(s::Symbol)
         throw(ArgumentError("Color not found"))
     end
     return color
+end
+
+finished_run_message(runparams::AbstractRunParams) = finished_run_message(basename(runparams))
+finished_run_message(name::AbstractString) = println("Finished run: $name")
+
+function flat_lamppost(r, h)
+    return h/(r^2+h^2)^(3/2)
 end
