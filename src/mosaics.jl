@@ -1,16 +1,16 @@
 function bolometric_intensity_mosaic(runset::CameraRunSet; zmax, figname)
-    has_unique_potential(runset) || throw(ArgumentError("The potential is not unique throughout the runset"))
     has_three_inclinations(runset) || throw(ArgumentError("The runset does not contain three inclinations"))
-    potential = get_potential(runset, 1)
-    bolometric_intensity_mosaic(runset, potential; zmax=zmax, figname=figname)
+    bolometric_intensity_mosaic(runset, runset.models; zmax=zmax, figname=figname)
 end
 
-function bolometric_intensity_mosaic(runset::CameraRunSet, potential::Union{SBS,LBS}; zmax, figname)
+function bolometric_intensity_mosaic(runset::CameraRunSet, model::AbstractBosonStar; zmax, figname)
     has_three_models(runset) || throw(ArgumentError("The runset does not contain three models"))
+    has_three_inclinations(runset) || throw(ArgumentError("The runset does not contain three inclinations"))
     data, zmaxcols = bolometric_intensity_data(runset)
     fig, axes = prepare_mosaic(nrows=3, size=(800, 800))
     inclination_labels = get_inclination_labels(runset) 
-    cbar_ticks = get_cbar_ticks(potential)     
+    model_labels = get_model_labels(runset) 
+    cbar_ticks = get_cbar_ticks(model)     
     
     for j in 1:3
         for i in 1:3
@@ -52,7 +52,7 @@ function bolometric_intensity_mosaic(runset::CameraRunSet, potential::Union{SBS,
 
         #Make left ylabel visible again to use as model label
         axleft.ylabelvisible = true
-        axleft.ylabel = model_label(runset.models[k])
+        axleft.ylabel = model_labels[k]
         axleft.ylabelsize = 18
         
         cbar = Colorbar(fig[0,k], vertical=false, colormap=:gist_heat, colorrange = (0,zmaxcols[k]/zmax), label=inclination_labels[k])
@@ -77,12 +77,13 @@ function bolometric_intensity_mosaic(runset::CameraRunSet, potential::Union{SBS,
     save(figname, fig, pt_per_unit = 0.5)
 end
 
-function bolometric_intensity_mosaic(runset::CameraRunSet, potential::BH; zmax, figname)
+function bolometric_intensity_mosaic(runset::CameraRunSet, model::BH; zmax, figname)
     has_one_model(runset) || throw(ArgumentError("The runset does not contain one model"))
+    has_three_inclinations(runset) || throw(ArgumentError("The runset does not contain three inclinations"))
     data, zmaxcols = bolometric_intensity_data(runset)
     fig, axes = prepare_mosaic(nrows=1, size=(900, 400))
     inclination_labels = get_inclination_labels(runset) 
-    cbar_ticks = get_cbar_ticks(potential)     
+    cbar_ticks = get_cbar_ticks(model)     
     
     for j in 1:3
         axes[1,j] = Axis(fig[1,j])
@@ -115,7 +116,7 @@ function bolometric_intensity_mosaic(runset::CameraRunSet, potential::BH; zmax, 
 
     #Make left ylabel visible again to use as model label
     axleft.ylabelvisible = true
-    axleft.ylabel = model_label(runset.models[1])
+    axleft.ylabel = model_label(runset.model)
     axleft.ylabelsize = 18
 
     for k in 1:3
@@ -151,7 +152,6 @@ end
 
 function spectrum_mosaic(LBSrunset::CameraRunSet, SBSrunset::CameraRunSet, BHrunset::CameraRunSet; observation_energies, figname)
     runsets = [LBSrunset, SBSrunset, BHrunset]
-    have_unique_potentials(runsets) || throw(ArgumentError("Runsets must have unique potentials")) 
     have_three_inclinations(runsets) || throw(ArgumentError("Runsets must have three inclinations")) 
     have_same_inclinations(runsets) || throw(ArgumentError("Runsets must have the same inclinations"))
     have_three_models([LBSrunset, SBSrunset]) || throw(ArgumentError("Boson star runsets must have three models")) 
@@ -227,7 +227,6 @@ end
 
 function emissiviy_profile_mosaic(LBSrunset::CoronaRunSet, SBSrunset::CoronaRunSet, BHrunset::CoronaRunSet; figname)
     runsets = [LBSrunset, SBSrunset, BHrunset]
-    have_unique_potentials(runsets) || throw(ArgumentError("Runsets must have unique potentials")) 
     have_three_heights(runsets) || throw(ArgumentError("Runsets must have three heights")) 
     have_same_heights(runsets) || throw(ArgumentError("Runsets must have the same heights"))
     have_three_models([LBSrunset, SBSrunset]) || throw(ArgumentError("Boson star runsets must have three models")) 
@@ -314,7 +313,6 @@ end
 
 function emissiviy_profile_mosaic_focused(SBSrunset::CoronaRunSet, BHrunset::CoronaRunSet; figname)
     runsets = [SBSrunset, BHrunset]
-    have_unique_potentials(runsets) || throw(ArgumentError("Runsets must have unique potentials")) 
     have_three_heights(runsets) || throw(ArgumentError("Runsets must have three heights")) 
     have_same_heights(runsets) || throw(ArgumentError("Runsets must have the same heights"))
     has_three_models(SBSrunset) || throw(ArgumentError("Boson star runsets must have three models")) 
@@ -393,7 +391,6 @@ end
 function line_emission_mosaic(SBSrunset::CameraRunSet, BHrunset::CameraRunSet, SBScorona_runset::CoronaRunSet, BHcorona_runset::CoronaRunSet; number_of__energy_bins, figname)
 
     runsets = [SBSrunset, BHrunset, SBScorona_runset, BHcorona_runset]
-    have_unique_potentials(runsets) || throw(ArgumentError("Runsets must have unique potentials")) 
     have_same_models([SBSrunset, SBScorona_runset]) || throw(ArgumentError("Boson star runsets must have the same models"))
     have_three_primary_parameters(runsets) || throw(ArgumentError("Runsets must have three secondary parameters (height or inclination)")) 
     have_same_primary_parameters(runsets) || throw(ArgumentError("Runsets must have the same secondary parameters (height or inclination)"))
