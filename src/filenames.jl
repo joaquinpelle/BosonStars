@@ -32,3 +32,4 @@ datafile(params::CameraRunParams) = datafile(basename(params))
 datafile(params::CoronaRunParams) = corona_file(basename(params))
 datafile(basename::AbstractString) = "io/$(basename).h5"
 corona_file(basename::AbstractString) = "io/corona/$(basename).txt"
+temperature_file(model::AbstractModel) = "io/temperature/Temp$(to_string(model)).dat"
