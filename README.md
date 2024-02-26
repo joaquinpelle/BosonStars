@@ -38,7 +38,7 @@ We recommend to create a dedicated Pkg environment for this project. You can do 
 
 ### How to run the code
 
-The `main.jl` file contains a complete example with the parameters used in the preprint. You can run it by simply typing `julia main.jl` in the terminal. Or, from the Julia REPL `include("main.jl")` after activating the Pkg project with the required packages. The simulation data is saved in the `io` folder, whereas the resulting plots will be saved in the `plots` folder. The plotting functions can be run independently from the simulations once the data has been saved, which the `radiative_transfer` function does automatically. As an example, see the `plots.jl` file, that can be run assuming the corresponding simulation data has been saved already. This is useful for re-processing data without having to re-run it.
+The `main.jl` file contains a complete example with the parameters used in the preprint. You can run it by simply typing `julia main.jl` in the terminal. Or, from the Julia REPL, `include("main.jl")`, after activating the Pkg project with the required packages. The simulation data is saved in the `io` folder, whereas the resulting plots will be saved in the `plots` folder. The plotting functions can be run independently from the simulations once the data has been saved, which the `radiative_transfer` function does automatically. As an example, see the `plots.jl` file, that can be run assuming the corresponding simulation data has been saved already. This is useful for re-processing data without having to re-run it.
 
 ### Plot settings
 
