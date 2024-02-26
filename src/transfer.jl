@@ -1,21 +1,21 @@
-function make_runs(runsets::Vector{T}; reltol, abstol) where {T<:AbstractRunSet}
+function radiative_transfer(runsets::Vector{T}; reltol, abstol) where {T<:AbstractRunSet}
     for runset in runsets
-        make_runs(runset; reltol=reltol, abstol=abstol)
+        radiative_transfer(runset; reltol=reltol, abstol=abstol)
     end
 end
 
-function make_runs(runset::AbstractRunSet;
+function radiative_transfer(runset::AbstractRunSet;
                 reltol, 
                 abstol)
     for i in model_id(runset)
         for j in primary_id(runset)
             runparams = get_runparams(runset, i, j)
-            make_run(runparams; reltol=reltol, abstol=abstol)
+            radiative_transfer(runparams; reltol=reltol, abstol=abstol)
         end
     end
 end
 
-function make_run(runparams::CameraRunParams;
+function radiative_transfer(runparams::CameraRunParams;
                 reltol, 
                 abstol)
     spacetime = create_spacetime(runparams)
@@ -32,7 +32,7 @@ function make_run(runparams::CameraRunParams;
     finished_run_message(runparams)
 end
 
-function make_run(runparams::CoronaRunParams;
+function radiative_transfer(runparams::CoronaRunParams;
                 reltol=1e-5, 
                 abstol=1e-5)
     spacetime = create_spacetime(runparams)
