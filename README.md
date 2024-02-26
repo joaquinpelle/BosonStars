@@ -5,7 +5,7 @@
 </div>
 
 
-This repository contains the code for the production runs and plots in ["Thermal emission and line broadening from accretion disks around boson stars"](https://arxiv.org/) by J. L. Rosa, J. Pelle, and D. Perez.
+This repository contains the code for the production runs and plots in ["Relativistic thermal emission and line broadening from accretion disks around boson stars"](https://arxiv.org/) by J. L. Rosa, J. Pelle, and D. Perez.
 
 It uses the open-source Julia package [Skylight](https://github.com/joaquinpelle/Skylight.jl) for general-relativistic ray tracing and radiative transfer in arbitrary spacetimes.   
 
