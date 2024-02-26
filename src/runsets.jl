@@ -1,5 +1,5 @@
-function get_runparams(set::CameraRunSet, model_idx::Int, inclination_idx::Int)
-    return CameraRunParams(set.models[model_idx], set.inclinations[inclination_idx], set.number_of_pixels_per_side, set.observation_radius)
+function get_runparams(runset::CameraRunSet, model_idx::Int, inclination_idx::Int)
+    return CameraRunParams(runset.models[model_idx], runset.inclinations[inclination_idx], runset.number_of_pixels_per_side, runset.observation_radius)
 end
 
 function get_runparams(runset::CoronaRunSet, model_idx::Int, height_idx::Int)
