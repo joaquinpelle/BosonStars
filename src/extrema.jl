@@ -1,4 +1,4 @@
-function zextrema(runsets::Vector{CameraRunSet})
+function zextrema(runsets::Vector{T}) where {T<:CameraRunSet}
     zmin, zmax = Inf, -Inf
     for runset in runsets
         zminv, zmaxv = zextrema(runset)
