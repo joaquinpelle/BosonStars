@@ -87,5 +87,5 @@ model_id(::IsCollective, runset::AbstractRunSet) = runset.models.id
 
 primary_id(runset::AbstractRunSet) = (eachindex ∘ primary_parameter)(runset)
 
-number_of_inclinations(params::CameraRunParams) = length(params.inclinations)
-number_of_heights(params::CoronaRunParams) = length(params.heights)
+number_of_inclinations(runset::CameraRunSet) = length(runset.inclinations)
+number_of_heights(runset::CoronaRunSet) = length(runset.heights)
