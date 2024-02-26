@@ -197,10 +197,10 @@ function spectrum_mosaic(LBSrunset::CameraRunSet, SBSrunset::CameraRunSet, BHrun
         ax = axes[1,j]
         for i in 1:3
             FLBS = LBSdata[i,j]
-            lines!(ax, erg_to_eV(obs_energies), eV_to_erg(FLBS); linewidth=2.0, color=colors[i], linestyle=:dot, label=LBSmodel_labels[i])
+            lines!(ax, erg_to_eV(observation_energies), eV_to_erg(FLBS); linewidth=2.0, color=colors[i], linestyle=:dot, label=LBSmodel_labels[i])
         end
         FBH = BHdata[1,j]
-        lines!(ax, erg_to_eV(obs_energies), eV_to_erg(FBH); linewidth=2.0, color=:black, linestyle=:solid, label=model_label(BH()))
+        lines!(ax, erg_to_eV(observation_energies), eV_to_erg(FBH); linewidth=2.0, color=:black, linestyle=:solid, label=model_label(BH()))
         ylims!(ax, 1e5, 1e16)
         ax.xscale = log10
         ax.yscale = log10
@@ -214,7 +214,7 @@ function spectrum_mosaic(LBSrunset::CameraRunSet, SBSrunset::CameraRunSet, BHrun
         ax.xtickalign = 1
         for i in 1:3
             FSBS = SBSdata[i,j]
-            lines!(ax, erg_to_eV(obs_energies), eV_to_erg(FSBS); linewidth=2.0, color=colors[i], linestyle=:dash, label=SBSmodel_labels[i])
+            lines!(ax, erg_to_eV(observation_energies), eV_to_erg(FSBS); linewidth=2.0, color=colors[i], linestyle=:dash, label=SBSmodel_labels[i])
         end
     end
 
@@ -297,7 +297,7 @@ function emissiviy_profile_mosaic(LBSrunset::CoronaRunSet, SBSrunset::CoronaRunS
             lines!(ax, data[:,1], data[:,2]; linewidth=2.0, color=colors[i], linestyle=:dash, label=SBSmodel_labels[i])
         end
         rad = exp10.(range(log10(0.1), stop=log10(110), length=100))
-        lamp = map(r -> flat_lamppost(r, heights[j]), rad)
+        lamp = map(r -> flat_lamppost(r, LBSrunset.heights[j]), rad)
         lines!(ax, rad, 0.4lamp; linewidth=2.0, color=:gray, linestyle=:solid, label=flat_lamppost_label())
         supertitle = Label(fig[0,j], height_labels[j], justification=:center, fontsize=18, color=:black)
         supertitle.tellwidth = false
@@ -388,17 +388,17 @@ function emissiviy_profile_mosaic_focused(SBSrunset::CoronaRunSet, BHrunset::Cor
     save(figname, fig)
 end
 
-function line_emission_mosaic(SBSrunset::CameraRunSet, BHrunset::CameraRunSet, SBScorona_runset::CoronaRunSet, BHcorona_runset::CoronaRunSet; number_of__energy_bins, figname)
+function line_emission_mosaic(SBSrunset::CameraRunSet, BHrunset::CameraRunSet, SBScorona_runset::CoronaRunSet, BHcorona_runset::CoronaRunSet; number_of_energy_bins, figname)
 
     runsets = [SBSrunset, BHrunset, SBScorona_runset, BHcorona_runset]
-    have_same_models([SBSrunset, SBScorona_runset]) || throw(ArgumentError("Boson star runsets must have the same models"))
     have_three_primary_parameters(runsets) || throw(ArgumentError("Runsets must have three secondary parameters (height or inclination)")) 
-    have_same_primary_parameters(runsets) || throw(ArgumentError("Runsets must have the same secondary parameters (height or inclination)"))
+    have_same_inclinations([SBSrunset, BHrunset]) || throw(ArgumentError("Runsets must have the same inclinations"))
+    have_same_heights([SBScorona_runset, BHcorona_runset]) || throw(ArgumentError("Runsets must have the same heights"))
     have_three_models([SBSrunset, SBScorona_runset]) || throw(ArgumentError("Boson star runsets must have three models")) 
     have_one_model([BHrunset, BHcorona_runset]) || throw(ArgumentError("Black hole runset must have one model")) 
 
-    SBSdata = line_emission_data(SBSrunset, SBScorona_runset; number_of__energy_bins = number_of__energy_bins)
-    BHdata = line_emission_data(BHrunset, BHcorona_runset; number_of__energy_bins = number_of__energy_bins)
+    SBSdata = line_emission_data(SBSrunset, SBScorona_runset; number_of_energy_bins = number_of_energy_bins)
+    BHdata = line_emission_data(BHrunset, BHcorona_runset; number_of_energy_bins = number_of_energy_bins)
 
     fig, axes = prepare_mosaic(nrows=3, size=(800, 800))
     inclination_labels = get_inclination_labels(SBSrunset)
@@ -412,11 +412,11 @@ function line_emission_mosaic(SBSrunset::CameraRunSet, BHrunset::CameraRunSet, S
             for i in 1:3
                 binned_fluxes, bins_edges = SBSdata[i,j,k]
                 fmax = maximum(binned_fluxes)
-                lines!(axes[k,j], midpoints(bins_edges), binned_fluxes/fmax; linewidth=2.0, color=colors[i], linestyle=:dash, label=model_labels[i])
+                lines!(axes[k,j], Skylight.midpoints(bins_edges), binned_fluxes/fmax; linewidth=2.0, color=colors[i], linestyle=:dash, label=model_labels[i])
             end
-            binned_fluxes, bins_edges = BHdata[i,j,k]
+            binned_fluxes, bins_edges = BHdata[1,j,k]
             fmax = maximum(binned_fluxes)
-            lines!(axes[k,j], midpoints(bins_edges), binned_fluxes/fmax; linewidth=2.0, color=:black, linestyle=:solid, label=model_label(BH()))
+            lines!(axes[k,j], Skylight.midpoints(bins_edges), binned_fluxes/fmax; linewidth=2.0, color=:black, linestyle=:solid, label=model_label(BH()))
         end
     end
 

@@ -4,7 +4,7 @@ function inner_radius(model::SBS{Int})
     model.id == 3 && return 6.1
 end
 inner_radius(::LBS) = 0.1
-innter_radius(::BH) = 6.0
+inner_radius(::BH) = 6.0
 
 function outer_radius(model::SBS{Int}) 
     model.id == 1 && return 79.8
@@ -31,11 +31,17 @@ create_spacetime(::BH) = SchwarzschildSpacetimeSphericalCoordinates(M=1.0)
 
 create_accretion_disk(params::CameraRunParams) = create_accretion_disk(params.model)
 function create_accretion_disk(model::AbstractModel)
-    AccretionDiskWithTabulatedTemperature(inner_radius = inner_radius(model), outer_radius = outer_radius(model), filename = temperature_filename(model))
+    AccretionDiskWithTabulatedTemperature(inner_radius = inner_radius(model), outer_radius = outer_radius(model), filename = temperature_file(model))
 end
 function create_line_emission_disk(params::CoronaRunParams)
-    AccretionDiskWithTabulatedProfile(inner_radius = inner_radius(params.model), outer_radius = outer_radius(params.model), filename = datafile(params))
+    Skylight.AccretionDiskWithTabulatedProfile(inner_radius = inner_radius(params.model), outer_radius = outer_radius(params.model), filename = datafile(params))
 end
+
+create_plane(params::CameraRunParams) = create_plane(params.model)
+create_plane(model::BH) = NovikovThorneDisk(inner_radius = event_horizon_radius(create_spacetime(model))+1e-3+eps(), outer_radius = 100.0)
+create_plane(::AbstractBosonStar) = NovikovThorneDisk(inner_radius = 0.0, outer_radius = outer_radius(model))
+
+create_corona(params::CoronaRunParams) = LamppostCorona(height=params.height, theta_offset=1e-5, spectral_index = params.spectral_index)
 
 function create_camera(params::CameraRunParams)
     aperture = camera_aperture(params)
@@ -45,9 +51,3 @@ function create_camera(params::CameraRunParams)
                 horizontal_number_of_pixels = params.number_of_pixels_per_side,
                 vertical_number_of_pixels = params.number_of_pixels_per_side) 
 end
-
-create_plane(params::CameraRunParams) = create_plane(params.model)
-create_plane(model::BH) = NovikovThorneDisk(inner_radius = event_horizon_radius(create_spacetime(model))+1e-3+eps(), outer_radius = 100.0)
-create_plane(::AbstractBosonStar) = NovikovThorneDisk(inner_radius = 0.0, outer_radius = outer_radius(model))
-
-create_corona(params::CoronaRunParams) = LamppostCorona(height=params.height, theta_offset=1e-5, spectral_index = params.spectral_index)

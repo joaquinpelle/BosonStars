@@ -25,7 +25,7 @@ function rescale_axes(xs, ys)
     return xs, ys
 end
 
-size(runset::AbstractRunSet) = (length(runset.models), length(primary_parameter(runset)))
+size(runset::AbstractRunSet) = (length(model_id(runset)), length(primary_parameter(runset)))
 
 intensity_label() = L"I/I_{\text{max}}"
 get_cbar_ticks(::LBS) = [[0.0,0.02,0.05],[0.0, 0.1, 0.2],[0.0, 0.5, 1.0]]
@@ -35,12 +35,12 @@ get_cbar_ticks(::BH) = [[0.0,0.002,0.004],[0.0, 0.005, 0.01, 0.015],[0.01, 0.02,
 alpha_label() = L"\alpha \, [^\circ]"
 beta_label() = L"\beta \, [^\circ]"
 
-function model_label(model::AbstractBosonStar)
-    symbol = to_symbol(model)
-    return L"\text{%$(symbol)}"
-end
-
+model_label(model::SBS{Int}) = L"\text{SBS%$(model.id)}"
+model_label(model::LBS{Int}) = L"\Lambda \text{BS%$(model.id)}"
 model_label(::BH) = L"\text{BH}"
+
+height_label(h) = floor(h) == h ? L"h = %$(Int(h)) M" : L"h = %$(h) M"
+
 get_model_labels(runset::AbstractRunSet) = [model_label(model) for model in runset.models]
 
 function get_inclination_labels(runset::CameraRunSet)
