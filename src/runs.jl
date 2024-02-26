@@ -28,9 +28,8 @@ function make_run(runparams::CameraRunParams;
     initial_data = initialize(configurations)
     cb, cb_params = callback_setup(configurations; cbp_kwargs(runparams)...)  
     run = integrate(initial_data, configurations, cb, cb_params; method=VCABM(), reltol=reltol, abstol=abstol)
-    name = get_basename(runparams) 
-    save_to_hdf5(datafile(name), configurations, initial_data, [run]; mode="w")
-    finished_run_message(name)
+    save_to_hdf5(datafile(runparams), configurations, initial_data, [run]; mode="w")
+    finished_run_message(runparams)
 end
 
 function make_run(runparams::CoronaRunParams;
@@ -42,7 +41,7 @@ function make_run(runparams::CoronaRunParams;
     configurations = VacuumETOConfigurations(spacetime=spacetime,
                                     radiative_model = corona,
                                     number_of_points=1,
-                                    number_of_packets_per_point = number_of_packets, 
+                                    number_of_packets_per_point = runparams.number_of_packets, 
                                     max_radius = 110.0,
                                     unit_mass_in_solar_masses=1.0)
     initial_data = initialize(configurations)
@@ -51,8 +50,7 @@ function make_run(runparams::CoronaRunParams;
     cbp = callback_parameters(spacetime, plane, configurations; cbp_kwargs(runparams)...)
     sim = integrate(initial_data, configurations, cb, cbp; method=VCABM(), reltol=reltol, abstol=abstol)
     output_data = sim.output_data
-    I, bins_edges = emissivity_profile(output_data, spacetime, disk, corona; number_of_radial_bins = runparams.number_of_radial_bins)
-    name = basename(runparams)
-    save_profile(I, bins_edges; filename = corona_file(name))
-    finished_run_message(name)
+    I, bins_edges = emissivity_profile(output_data, spacetime, disk, corona; nbins = runparams.number_of_radial_bins)
+    save_profile(I, bins_edges; filename = datafile(runparams))
+    finished_run_message(runparams)
 end
