@@ -18,7 +18,8 @@ function basename(params::CoronaRunParams)
     modelsymbol = to_symbol(params.model)
     hstr = string(@sprintf("%.1f", params.height))
     istr = string(@sprintf("%02d", params.spectral_index))
-    return "$(dir)/$(modelsymbol)_h$(hstr)_idx$(istr)"
+    Nstr = string(@sprintf("%04d", params.number_of_packets/1e6))
+    return "$(dir)/$(modelsymbol)_h$(hstr)_idx$(istr)_np$(Nstr)"
 end
 
 modeldir(::AbstractBosonStar) = "bosonstar"
@@ -26,4 +27,4 @@ modeldir(::BH) = "schwarzschild"
 
 to_symbol(model::SBS{Int}) = Symbol("SBS", model.id)
 to_symbol(model::LBS{Int}) = Symbol("LBS", model.id)
-to_symbol(::BH) = :SCHW
+to_symbol(::BH) = :BH
