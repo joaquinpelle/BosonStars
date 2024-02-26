@@ -9,7 +9,8 @@ function flat_lamppost(r, h)
     return h/(r^2+h^2)^(3/2)
 end
 
-finished_run_message(name) = println("Finished run: $name")
+finished_run_message(runparams::AbstractRunParams) = finished_run_message(basename(runparams))
+finished_run_message(name::AbstractString) = println("Finished run: $name")
 
 function prepare_mosaic(; nrows, size)
     paxes = Matrix{Axis}(undef, nrows, 3)
