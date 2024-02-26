@@ -1,7 +1,7 @@
 #!/bin/bash -l
 ### Standard output and error:
-#SBATCH -o std/out.%j
-#SBATCH -e std/err.%j
+#SBATCH -o logs/out.%j
+#SBATCH -e logs/err.%j
 
 ### Initial working directory:
 #SBATCH -D ./
