@@ -1,5 +1,4 @@
 #!/bin/bash -l
-
 ### Standard output and error:
 #SBATCH -o std/out.%j
 #SBATCH -e std/err.%j
@@ -10,7 +9,7 @@
 ### Job Name:
 #SBATCH -J bosonstar
 
-#SBATCH --partition=short
+#SBATCH --partition=multi
 
 ### Number of nodes and MPI tasks per node:
 #SBATCH --nodes=1
@@ -20,7 +19,7 @@
 #SBATCH --mail-user=jpelle@mi.unc.edu.ar
 #
 # Wall clock Limit:
-#SBATCH --time=1:00:00
+#SBATCH --time=8:00:00
 
 ##################################
 
