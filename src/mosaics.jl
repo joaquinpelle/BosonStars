@@ -466,3 +466,58 @@ function line_emission_mosaic(SBSrunset::CameraRunSet, BHrunset::CameraRunSet, S
     display(fig)
     save(figname, fig, pt_per_unit = 0.5)
 end
+
+function temperature_plot(LBSrunset::CameraRunSet, SBSrunset::CameraRunSet, BHrunset::CameraRunSet; figname)
+    has_three_models(LBSrunset) || throw(ArgumentError("Boson star runsets must have three models")) 
+    has_three_models(SBSrunset) || throw(ArgumentError("Boson star runsets must have three models")) 
+    has_one_model(BHrunset) || throw(ArgumentError("Black hole runset must have one model")) 
+
+    LBSdata = temperature_data(LBSrunset)
+    SBSdata = temperature_data(SBSrunset)
+    BHdata = temperature_data(BHrunset)
+    
+    LBSmodel_labels = get_model_labels(LBSrunset)
+    SBSmodel_labels = get_model_labels(SBSrunset)
+    colors = julia_colors(:red, :green, :purple)
+
+    fig = Figure(size = (600,600))
+    ax = Axis(fig[1,1])
+
+    ax.ylabel = temperature_label()
+    ax.ylabelsize = 22
+    ax.yticklabelsize = 12
+    ax.ytickalign = 1
+
+    for i in 1:3
+        data = LBSdata[i]
+        lines!(ax, data[:,1], data[:,2]; linewidth=2.0, color=colors[i], linestyle=:dot, label=LBSmodel_labels[i])
+    end
+    data = BHdata[1]
+    lines!(ax, data[:,1], data[:,2]; linewidth=2.0, color=:black, linestyle=:solid, label=model_label(BH()))
+    for i in 1:3
+        data = SBSdata[i]
+        lines!(ax, data[:,1], data[:,2]; linewidth=2.0, color=colors[i], linestyle=:dash, label=SBSmodel_labels[i])
+    end
+    ylims!(ax, 1e6, 5.3e6)
+    xlims!(ax, 0.0, 26.0)
+    # ax.xscale = log10
+    # ax.yscale = log10
+    ax.titlesize = 18
+    ax.xlabel = radius_label() 
+    
+    ax.xlabelsize = 22
+    ax.ylabelsize = 22
+    ax.xticklabelsize = 15
+    ax.yticklabelsize = 15
+    ax.xtickalign = 1
+    ax.xticks = [0.0,5.0,10.0,15.0,20.0,25.0]
+    ax.xtickformat = "{:.1f}"
+    # supertitle = Label(fig[0,j], height_labels[j], justification=:center, fontsize=18, color=:black)
+    # supertitle.tellwidth = false
+    # supertitle.padding = (0.0, 0.0, 1.0, 0.0)
+    axislegend(ax, position=:rt, nbanks = 4, orientation=:horizontal)
+    # leg = Legend(fig[1,2], axmid, L"\text{Model}", nbanks = 4, tellwidth=false, tellheight=false, orientation=:horizontal, valign=:bottom)
+    # colgap!(fig.layout, 0)
+    display(fig)
+    save(figname, fig)
+end

@@ -1,6 +1,7 @@
 alpha_label() = L"\alpha \, [^\circ]"
 beta_label() = L"\beta \, [^\circ]"
-radius_label() = L"r / r_g"
+radius_label() = L"r / M"
+temperature_label() = L"T \, [\text{K}]"
 thermal_emission_energy_label() = L"E \, [\text{eV}]"
 line_emission_energy_label() = L"E / E_0"
 intensity_label() = L"I/I_{\text{max}}"

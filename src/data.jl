@@ -56,3 +56,12 @@ function line_emission_data(runset::CameraRunSet, corona_runset::CoronaRunSet; n
     end
     return data
 end
+
+function temperature_data(runset::CameraRunSet)
+    data = Vector{Any}(undef, length(model_id(runset)))
+    for i in model_id(runset)
+        runparams = get_runparams(runset, i, 1)
+        data[i] = load_temperature(runparams) 
+    end
+    return data
+end

@@ -37,6 +37,8 @@ BHcorona_runset = CoronaRunSet(models = BHmodel,
                     number_of_packets = 5000000,
                     number_of_radial_bins = 50)
 
+temperature_plot(LBSrunset, SBSrunset, BHrunset; figname="plots/temperature.pdf")
+
 _, zmax = zextrema([LBSrunset, SBSrunset, BHrunset])
 bolometric_intensity_mosaic(LBSrunset; zmax = zmax, figname = "plots/LBS_mosaic.pdf")
 bolometric_intensity_mosaic(SBSrunset; zmax = zmax, figname = "plots/SBS_mosaic.pdf")

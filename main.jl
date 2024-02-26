@@ -41,6 +41,8 @@ BHcorona_runset = CoronaRunSet(models = BHmodel,
 
 radiative_transfer([LBScorona_runset, SBScorona_runset, BHcorona_runset]; reltol=1e-5, abstol=1e-5)
 
+temperature_plot(LBSrunset, SBSrunset, BHrunset; figname="plots/temperature.pdf")
+
 _, zmax = zextrema([LBSrunset, SBSrunset, BHrunset])
 bolometric_intensity_mosaic(LBSrunset; zmax = zmax, figname = "plots/LBS_mosaic.pdf")
 bolometric_intensity_mosaic(SBSrunset; zmax = zmax, figname = "plots/SBS_mosaic.pdf")
