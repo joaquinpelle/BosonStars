@@ -163,8 +163,8 @@ function spectrum_mosaic(LBSrunset::CameraRunSet, SBSrunset::CameraRunSet, BHrun
     
     fig, axes = prepare_mosaic(nrows=1, size=(1000,400))
     inclination_labels = get_inclination_labels(LBSrunset)
-    LBSmodel_labels = model_labels(LBSrunset)
-    SBSmodel_labels = model_labels(SBSrunset)
+    LBSmodel_labels = get_model_labels(LBSrunset)
+    SBSmodel_labels = get_model_labels(SBSrunset)
     
     colors = julia_colors(:red, :green, :purple)
 
@@ -239,8 +239,8 @@ function emissiviy_profile_mosaic(LBSrunset::CoronaRunSet, SBSrunset::CoronaRunS
     fig, axes = prepare_mosaic(nrows=1, size=(1000,400))
 
     height_labels = get_height_labels(LBSrunset)
-    LBSmodel_labels = model_labels(LBSrunset)
-    SBSmodel_labels = model_labels(SBSrunset)
+    LBSmodel_labels = get_model_labels(LBSrunset)
+    SBSmodel_labels = get_model_labels(SBSrunset)
     
     colors = julia_colors(:red, :green, :purple)
 
@@ -324,7 +324,7 @@ function emissiviy_profile_mosaic_focused(SBSrunset::CoronaRunSet, BHrunset::Cor
     fig, axes = prepare_mosaic(nrows=1, size=(1000,400))
 
     height_labels = get_height_labels(SBSrunset)
-    SBSmodel_labels = model_labels(SBSrunset)
+    SBSmodel_labels = get_model_labels(SBSrunset)
     
     colors = julia_colors(:red, :green, :purple)
 
