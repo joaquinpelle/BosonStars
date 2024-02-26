@@ -3,7 +3,7 @@ datafile(params::CoronaRunParams) = corona_file(basename(params))
 
 camera_file(basename::AbstractString) = "io/camera/$(basename).h5"
 corona_file(basename::AbstractString) = "io/corona/$(basename).txt"
-temperature_file(model::AbstractModel) = "io/temperature/Temp$(to_string(model)).dat"
+temperature_file(model::AbstractModel) = "io/temperature/Temp$(to_symbol(model)).dat"
 
 function basename(params::CameraRunParams)
     dir = modeldir(params.model)
@@ -24,7 +24,6 @@ end
 modeldir(::AbstractBosonStar) = "bosonstar"
 modeldir(::BH) = "schwarzschild"
 
-to_string(model::SBS{Int}) = "SBS$(model.id)"
-to_string(model::LBS{Int}) = "LBS$(model.id)"
-to_symbol(model::AbstractBosonStar) = (Symbol ∘ to_string)(model)
+to_symbol(model::SBS{Int}) = Symbol("SBS", model.id)
+to_symbol(model::LBS{Int}) = Symbol("LBS", model.id)
 to_symbol(::BH) = :SCHW
