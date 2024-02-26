@@ -4,7 +4,8 @@
   <img src="./plots/assets/SBS_mosaic.png" alt="Skylight Logo" width="600"/>
 </div>
 
-This repository contains the code for the production runs and plots in the preprint ["Thermal emission and line broadening from accretion disks around boson stars"](https://arxiv.org/) by J. L. Rosa, J. Pelle, and D. Perez.
+
+This repository contains the code for the production runs and plots in ["Thermal emission and line broadening from accretion disks around boson stars"](https://arxiv.org/) by J. L. Rosa, J. Pelle, and D. Perez.
 
 It uses the open-source Julia package [Skylight.jl](https://github.com/joaquinpelle/Skylight.jl) for general-relativistic ray tracing and radiative transfer in arbitrary spacetimes.   
 
@@ -12,7 +13,7 @@ If you find this codebase useful for your own work, we kindly request to cite ou
 
 ### Requirements
 
-The code requires to have the following Julia packages installed:
+The code requires Julia (version at least 1.6), and the following Julia packages to be installed:
 
 - CairoMakie
 - Colors
@@ -22,7 +23,8 @@ The code requires to have the following Julia packages installed:
 - Skylight 
 
 ### Installation
-We recommend to create a dedicated Pkg environment for this project. You can do so with the following steps:
+
+We recommend to create a dedicated Pkg environment for this project. You can do so by following these steps:
 
 1. Clone the repository to your local machine
 2. Open a terminal and navigate to the repository folder
@@ -36,13 +38,14 @@ We recommend to create a dedicated Pkg environment for this project. You can do 
 
 ### How to run the code
 
-The `main.jl` contains a complete example with the parameters used in the preprint. You can run it by simply typing `julia main.jl` in the terminal. Or, from the Julia REPL `include("main.jl")` after activating the Pkg project with the required packages. The simulation data is saved in the `io` folder, whereas the resulting plots will be saved in the `plots` folder. The plotting functions can be run independently of the simulations once the data has been saved, as for example in the `plots.jl` file.
+The `main.jl` file contains a complete example with the parameters used in the preprint. You can run it by simply typing `julia main.jl` in the terminal. Or, from the Julia REPL `include("main.jl")` after activating the Pkg project with the required packages. The simulation data is saved in the `io` folder, whereas the resulting plots will be saved in the `plots` folder. The plotting functions can be run independently from the simulations once the data has been saved, which the `radiative_transfer` function does automatically. An example is in the `plots.jl` file, that can be run assuming the corresponding simulation data has been saved.
 
 ### Plot settings
-Keep in mind that most of the plot settings are tailored for the production runs of the preprint. These settings, like axes scales, axes limits, colorbar ticks, etc. are set inside the corresponding mosaic functions in the `mosaics.jl` file. You may need to customize the values from there to fit your needs.
+
+Unfortunately, most of the plot attributes are tailored for the production runs of the preprint. These attributes, like aaxes limits, colorbar ticks, etc., are set inside the corresponding mosaic functions in the `src/mosaics.jl` file, and in the `src/plotattributes.jl` file. You may need to identify and customize these values from the source files to fit your needs.
 
 ### SLURM batch submission
-There is also an example SLURM batch submission file, used for running this code on the Serafin supercomputer at [Centro de Computo de Alto Desempeño](https://ccad.unc.edu.ar/), Universidad Nacional de Cordoba. The standard output and error files are directed to the `logs` folder.
+There is also an example SLURM batch submission file. Particularly, it is the one used for the production runs on the Serafin supercomputer at [Centro de Computo de Alto Desempeño](https://ccad.unc.edu.ar/), Universidad Nacional de Cordoba. The standard output and error files are directed to the `logs` folder.
 
 ### Questions and issues
 
