@@ -16,7 +16,7 @@
 #SBATCH --ntasks-per-node=64
 #
 #SBATCH --mail-type=ALL
-#SBATCH --mail-user=jpelle@mi.unc.edu.ar
+#SBATCH --mail-user=<user-email>
 #
 # Wall clock Limit:
 #SBATCH --time=8:00:00
