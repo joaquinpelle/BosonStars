@@ -24,21 +24,19 @@ The code requires Julia (version at least 1.6), and the following Julia packages
 
 ### Installation
 
-We recommend to create a dedicated Pkg environment for this project. You can do so by following these steps:
+We recommend to create a dedicated Pkg project for this code. You can do so by following these steps:
 
-1. Clone the repository to your local machine
-2. Open a terminal and navigate to the repository folder
+1. Clone this repository and the [Skylight repository](https://github.com/joaquinpelle/Skylight.jl) to your local machine
+2. Open a terminal and navigate to this repository's folder
 3. Start Julia by typing `julia` in the terminal
 4. Press `]` to enter the Pkg REPL mode
-5. Type `activate BosonStars` to create a new project named `BosonStars`
-6. Go back to the Julia REPL by pressing `Ctrl+C`
-7. Import `Pkg` by typing `using Pkg`
-8. Install the registered packages by typing `Pkg.add("CairoMakie")`, `Pkg.add("Colors")`, `Pkg.add("DelimitedFiles")`, `Pkg.add("Parameters")`, and `Pkg.add("Printf")`
-9. Install Skylight following the instructions [here](https://joaquinpelle.github.io/Skylight.jl/dev/)
+5. Type `activate <ProjectName>` to create a new project replacing `<ProjectName>` with the name of your choice
+6. Install the registered packages by typing `add CairoMakie`, `add Colors`, `add DelimitedFiles`, `add Parameters`, and `add Printf`
+7. Add Skylight by typing `dev <PathToSkylight>` in the Pkg REPL mode, where `<PathToSkylight>` is the path to the cloned Skylight repository
 
 ### How to run the code
 
-The `main.jl` file contains a complete example with the parameters used in the preprint. You can run it by simply typing `julia main.jl` in the terminal. Or, from the Julia REPL, `include("main.jl")`, after activating the Pkg project with the required packages. The simulation data is saved in the `io` folder, whereas the resulting plots will be saved in the `plots` folder. The plotting functions can be run independently from the simulations once the data has been saved, which the `radiative_transfer` function does automatically. As an example, see the `plots.jl` file, that can be run assuming the corresponding simulation data has been saved already. This is useful for re-processing data without having to re-run it.
+The `main.jl` file contains a complete example with the parameters used in the preprint. You can run it by simply typing `julia --project=<ProjectName> main.jl` in the terminal. Or, from the Julia REPL, `using Pkg`, `Pkg.activate("<ProjectName>")`, and `include("main.jl")`, where `<ProjectName>` is the project created in the previous step. The simulation data is saved in the `io` folder, whereas the resulting plots will be saved in the `plots` folder. The plotting functions can be run independently from the simulations once the data has been saved, which the `radiative_transfer` function does automatically. As an example, see the `plots.jl` file, that can be run assuming the corresponding simulation data has been saved already. This is useful for re-processing data without having to re-run it.
 
 ### Plot settings
 
