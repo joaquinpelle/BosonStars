@@ -614,3 +614,9 @@ function plot_factor(;FLBS::Union{Nothing,Vector{L}}=nothing,
     display(fig)
     save("plots/heat/$(property).png", fig)
 end
+
+function plot_factors(;properties, kwargs...)
+    for property in properties
+        plot_factor(;property=property, kwargs...)
+    end
+end
