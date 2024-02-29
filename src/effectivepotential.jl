@@ -14,8 +14,15 @@ function calculate_effective_potential(::IsNotCollective, model; rin, rout, N)
         F.gᵣᵣ[i] = g[2,2]
         F.sqrtg[i] = volume_element(position, spacetime, g, nothing)
         F.Ω[i] = circular_geodesic_angular_speed(position, spacetime, ProgradeRotation())
-        F.E[i], F.L[i] = circular_geodesic_energy_and_angular_momentum(g, F.Ω[i], spacetime)
+        F.E[i], F.L[i] = circular_geodesic_energy_and_angular_momentum(g, F.Ω[i])
         F.V[i] = -F.gₜₜ[i]*(1+F.L[i]^2/position[2]^2) 
     end
     return F
+end
+
+function circular_geodesic_energy_and_angular_momentum(g, Ω)
+    gtt = g[1,1]
+    gφφ = g[4,4] 
+    den = sqrt(-gtt -gφφ*Ω^2) 
+    return -gtt/den, gφφ*Ω/den
 end
