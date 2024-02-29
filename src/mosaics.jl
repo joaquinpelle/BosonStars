@@ -521,3 +521,96 @@ function temperature_plot(LBSrunset::CameraRunSet, SBSrunset::CameraRunSet, BHru
     display(fig)
     save(figname, fig)
 end
+
+function plot_potential(;FLBS::Union{Nothing,Vector{L}}=nothing, 
+    FSBS::Union{Nothing,Vector{S}}=nothing,
+    FBH::Union{Nothing,EffectivePotential{BH}}=nothing,
+    rin,
+    rout, 
+    property, 
+    logscale) where {L<:EffectivePotential{LBS{Int}}, S<:EffectivePotential{SBS{Int}}}
+
+    fig = Figure(size = (600,600))
+    ax = Axis(fig[1,1])
+    colors = [:red, :green, :purple]
+    if !isa(FBH, Nothing)
+        lines!(ax, FBH.r, getproperty(FBH, property); linewidth=2.0, color=:black, linestyle=:solid, label=model_label(FBH))
+    end
+    if !isa(FLBS, Nothing)
+        for F in FLBS
+            color = colors[F.model.id]
+            lines!(ax, F.r, getproperty(F, property); linewidth=2.0, color=color, linestyle=:dash, label=model_label(F))
+        end
+    end
+    if !isa(FSBS, Nothing)
+        for F in FSBS
+            color = colors[F.model.id]
+            lines!(ax, F.r, getproperty(F, property); linewidth=2.0, color=color, linestyle=:dot, label=model_label(F))
+        end
+    end
+    ax.ylabelsize = 22
+    ax.yticklabelsize = 12
+    ax.ytickalign = 1
+    ax.ylabel = property_label(property)
+    ax.xlabel = radius_label() 
+    ax.xlabelsize = 22
+    ax.ylabelsize = 22
+    ax.xticklabelsize = 15
+    ax.yticklabelsize = 15
+    ax.xtickalign = 1
+    ax.xtickformat = "{:.1f}"
+    xlims!(ax, rin, rout)
+    if logscale
+        ax.yscale = log10
+    end
+    axislegend(ax, nbanks = 1, orientation=:horizontal)
+    display(fig)
+    save("plots/heat/$(property).png", fig)
+end
+
+function plot_factor(;FLBS::Union{Nothing,Vector{L}}=nothing, 
+    FSBS::Union{Nothing,Vector{S}}=nothing,
+    FBH::Union{Nothing,TemperatureFactors{BH}}=nothing,
+    rout, 
+    property, 
+    ylims,
+    logscale) where {L<:TemperatureFactors{LBS{Int}}, S<:TemperatureFactors{SBS{Int}}}
+
+    fig = Figure(size = (600,600))
+    ax = Axis(fig[1,1])
+    colors = [:red, :green, :purple]
+    if !isa(FBH, Nothing)
+        lines!(ax, FBH.r, getproperty(FBH, property); linewidth=2.0, color=:black, linestyle=:solid, label=model_label(FBH))
+    end
+    if !isa(FLBS, Nothing)
+        for F in FLBS
+            color = colors[F.model.id]
+            lines!(ax, F.r, getproperty(F, property); linewidth=2.0, color=color, linestyle=:dash, label=model_label(F))
+        end
+    end
+    if !isa(FSBS, Nothing)
+        for F in FSBS
+            color = colors[F.model.id]
+            lines!(ax, F.r, getproperty(F, property); linewidth=2.0, color=color, linestyle=:dot, label=model_label(F))
+        end
+    end
+    ax.ylabelsize = 22
+    ax.yticklabelsize = 12
+    ax.ytickalign = 1
+    ax.ylabel = property_label(property)
+    ax.xlabel = radius_label() 
+    ax.xlabelsize = 22
+    ax.ylabelsize = 22
+    ax.xticklabelsize = 15
+    ax.yticklabelsize = 15
+    ax.xtickalign = 1
+    ax.xtickformat = "{:.1f}"
+    ylims!(ax, ylims...)
+    xlims!(ax, nothing, rout)
+    if logscale
+        ax.yscale = log10
+    end
+    axislegend(ax, nbanks = 1, orientation=:horizontal)
+    display(fig)
+    save("plots/heat/$(property).png", fig)
+end
