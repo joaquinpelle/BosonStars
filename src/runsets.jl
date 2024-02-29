@@ -19,4 +19,4 @@ number_of_models(runset::AbstractRunSet) = length(model_id(runset))
 number_of_inclinations(runset::CameraRunSet) = length(runset.inclinations)
 number_of_heights(runset::CoronaRunSet) = length(runset.heights)
 
-size(runset::AbstractRunSet) = (number_of_models(runset)), length(primary_parameter(runset)))
+size(runset::AbstractRunSet) = (number_of_models(runset)), length(primary_parameter(runset))
