@@ -29,6 +29,7 @@ get_cbar_ticks(::SBS) = [[0.0,0.002,0.004],[0.0, 0.005, 0.01, 0.015],[0.01, 0.02
 get_cbar_ticks(::BH) = [[0.0,0.0005,0.0015],[0.0, 0.002, 0.004],[0.0, 0.004, 0.008]]
 
 model_label(F::TemperatureFactors) = model_label(F.model)
+model_label(F::EffectivePotential) = model_label(F.model)
 function property_label(property)
     if property == :sqrtg
         return L"\text{sqrt}(-g)"
