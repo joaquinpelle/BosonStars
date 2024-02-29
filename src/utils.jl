@@ -55,3 +55,17 @@ function second_order_finite_difference(f, x)
     df[end] = (f[end] - f[end-1])/(x[end] - x[end-1])
     return df
 end
+
+function metric_difference(r, SBSspacetime::BosonStarSpacetime, BHspacetime::AbstractBlackHoleSpacetime)
+    position = [0.0, r, π/2, 0.0]
+    return abs.(metric(position, SBSspacetime) .- metric(position, BHspacetime))
+end
+
+function metric_diagonal_relative_error(r, SBSspacetime::BosonStarSpacetime, BHspacetime::AbstractBlackHoleSpacetime)
+    position = [0.0, r, π/2, 0.0]
+    gBS = metric(position, SBSspacetime)
+    gBH = metric(position, BHspacetime)
+    return [1.0-gBS[1,1]/gBH[1,1], 1.0-gBS[2,2]/gBH[2,2], 0.0, 0.0]
+end
+
+metric_diagonal_relative_error(6.0, SBSspacetime, BHspacetime)
