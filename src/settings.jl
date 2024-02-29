@@ -1,18 +1,15 @@
 function inner_radius(model::SBS{Int}) 
-    model.id == 1 && return 6.8
-    model.id == 2 && return 6.2
-    model.id == 3 && return 6.1
+    model.id == 1 && return 6.845535408967213
+    model.id == 2 && return 6.101401425243171
+    model.id == 3 && return 6.035979471429705
 end
-inner_radius(::LBS) = 0.1
+inner_radius(::LBS) = 1e-5
 inner_radius(::BH) = 6.0
 
-function outer_radius(model::SBS{Int}) 
-    model.id == 1 && return 79.8
-    model.id == 2 && return 79.7
-    model.id == 3 && return 79.6
-end
-outer_radius(::LBS) = 79.6
-outer_radius(::BH) = 80.0
+outer_radius(::AbstractModel) = 80.0
+
+minimum_radius(::BH) = (event_horizon_radius∘create_spacetime∘BH)() + 1e-3
+minimum_radius(::AbstractBosonStar) = 0.0
 
 camera_aperture(params::CameraRunParams) = camera_aperture(params.model)
 camera_aperture(::LBS) = 3.5
