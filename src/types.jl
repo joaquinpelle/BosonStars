@@ -69,3 +69,36 @@ iscollective(::AbstractModel) = IsNotCollective()
 iscollective(::SBS{T}) where {T<:CollectiveId} = IsCollective()
 iscollective(::LBS{T}) where {T<:CollectiveId} = IsCollective()
 iscollective(runset::AbstractRunSet) = iscollective(runset.models)
+
+@with_kw mutable struct TemperatureFactors{M}
+    model::M
+    N::Int = 100
+    r::Vector{Float64} = zeros(N)
+    gₜₜ::Vector{Float64} = zeros(N)
+    gᵣᵣ::Vector{Float64} = zeros(N)
+    sqrtg::Vector{Float64} = zeros(N)
+    Ω::Vector{Float64} = zeros(N)
+    E::Vector{Float64} = zeros(N)
+    L::Vector{Float64} = zeros(N)
+    V::Vector{Float64} = zeros(N)
+    ∂ᵣΩ::Vector{Float64} = zeros(N)
+    ∂ᵣL::Vector{Float64} = zeros(N)
+    EmΩL::Vector{Float64} = zeros(N)
+    df::Vector{Float64} = zeros(N)
+    ∫df::Vector{Float64} = zeros(N)
+    Q::Vector{Float64} = zeros(N)
+    T::Vector{Float64} = zeros(N)
+end
+
+@with_kw mutable struct EffectivePotential{M}
+    model::M
+    N::Int = 100
+    r::Vector{Float64} = zeros(N)
+    gₜₜ::Vector{Float64} = zeros(N)
+    gᵣᵣ::Vector{Float64} = zeros(N)
+    sqrtg::Vector{Float64} = zeros(N)
+    Ω::Vector{Float64} = zeros(N)
+    E::Vector{Float64} = zeros(N)
+    L::Vector{Float64} = zeros(N)
+    V::Vector{Float64} = zeros(N)
+end
