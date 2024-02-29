@@ -1,6 +1,7 @@
 load_from_hdf5(runparams::CameraRunParams, runid::Int) = load_from_hdf5(datafile(runparams), runid)
-load_temperature(runparams::CameraRunParams) = readdlm(temperature_file(runparams.model), '\t', Float64, '\n')
 load_from_file(runparams::CoronaRunParams) = readdlm(datafile(runparams), '\t', Float64, '\n')
+load_temperature(runparams::CameraRunParams) = load_temperature(runparams.model)
+load_temperature(model::AbstractModel) = readdlm(temperature_file(model), '\t', Float64, '\n')
 
 function load_run_from(file::AbstractString, runid::Int)
     initial_data = load_initial_data_from_hdf5(file)
