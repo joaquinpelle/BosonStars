@@ -46,16 +46,6 @@ function flat_lamppost(r, h)
     return h/(r^2+h^2)^(3/2)
 end
 
-function second_order_finite_difference(f, x)
-    df = zeros(length(f))
-    df[1] = (f[2] - f[1])/(x[2] - x[1])
-    for i in 2:length(f)-1
-        df[i] = (f[i+1] - f[i-1])/(x[i+1] - x[i-1])
-    end
-    df[end] = (f[end] - f[end-1])/(x[end] - x[end-1])
-    return df
-end
-
 function metric_difference(r, SBSspacetime::BosonStarSpacetime, BHspacetime::AbstractBlackHoleSpacetime)
     position = [0.0, r, π/2, 0.0]
     return abs.(metric(position, SBSspacetime) .- metric(position, BHspacetime))
@@ -69,3 +59,12 @@ function metric_diagonal_relative_error(r, SBSspacetime::BosonStarSpacetime, BHs
 end
 
 metric_diagonal_relative_error(6.0, SBSspacetime, BHspacetime)
+
+function second_order_finite_difference!(df, f, x)
+    df[1] = (f[2] - f[1])/(x[2] - x[1])
+    for i in 2:length(f)-1
+        df[i] = (f[i+1] - f[i-1])/(x[i+1] - x[i-1])
+    end
+    df[end] = (f[end] - f[end-1])/(x[end] - x[end-1])
+    return nothing
+end
