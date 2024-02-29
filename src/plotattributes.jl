@@ -27,3 +27,38 @@ end
 get_cbar_ticks(::LBS) = [[0.0,0.02,0.05],[0.0, 0.1, 0.2],[0.0, 0.5, 1.0]]
 get_cbar_ticks(::SBS) = [[0.0,0.002,0.004],[0.0, 0.005, 0.01, 0.015],[0.01, 0.02, 0.03]]
 get_cbar_ticks(::BH) = [[0.0,0.0005,0.0015],[0.0, 0.002, 0.004],[0.0, 0.004, 0.008]]
+
+model_label(F::TemperatureFactors) = model_label(F.model)
+function property_label(property)
+    if property == :sqrtg
+        return L"\text{sqrt}(-g)"
+    elseif property == :gₜₜ
+        return L"g_{tt}"
+    elseif property == :gᵣᵣ
+        return L"g_{rr}"
+    elseif property == :Ω
+        return L"\Omega"
+    elseif property == :E
+        return L"E"
+    elseif property == :L
+        return L"L"
+    elseif property == :∂ᵣΩ
+        return L"\partial_r \Omega"
+    elseif property == :∂ᵣL
+        return L"\partial_r L"
+    elseif property == :EmΩL
+        return L"E - \Omega L"
+    elseif property == :df
+        return L"(E - \Omega L) \partial_r L \, dr"
+    elseif property == :∫df
+        return L"\int (E - \Omega L) \partial_r L \, dr"
+    elseif property == :Q
+        return L"Q"
+    elseif property == :T
+        return L"T"
+    elseif property == :V
+        return L"V_\text{eff}"
+    else
+        return "Unknown property"
+    end
+end
