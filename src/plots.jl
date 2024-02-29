@@ -573,7 +573,7 @@ function plot_factor(;FLBS::Union{Nothing,Vector{L}}=nothing,
     FBH::Union{Nothing,TemperatureFactors{BH}}=nothing,
     rout, 
     property, 
-    ylims,
+    ylims=(nothing, nothing),
     logscale) where {L<:TemperatureFactors{LBS{Int}}, S<:TemperatureFactors{SBS{Int}}}
 
     fig = Figure(size = (600,600))
