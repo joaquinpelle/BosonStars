@@ -26,4 +26,4 @@
 export JULIA_NUM_THREADS=64
 export SLURM_HINT=multithread 
 
-julia main.jl
+julia --project=BosonStars main.jl
