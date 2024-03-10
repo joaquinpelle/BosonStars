@@ -58,8 +58,6 @@ function metric_diagonal_relative_error(r, SBSspacetime::BosonStarSpacetime, BHs
     return [1.0-gBS[1,1]/gBH[1,1], 1.0-gBS[2,2]/gBH[2,2], 0.0, 0.0]
 end
 
-metric_diagonal_relative_error(6.0, SBSspacetime, BHspacetime)
-
 function second_order_finite_difference!(df, f, x)
     df[1] = (f[2] - f[1])/(x[2] - x[1])
     for i in 2:length(f)-1
