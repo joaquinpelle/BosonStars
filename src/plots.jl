@@ -498,7 +498,7 @@ function temperature_plot(LBSrunset::CameraRunSet, SBSrunset::CameraRunSet, BHru
         data = SBSdata[i]
         lines!(ax, data[:,1], data[:,2]; linewidth=2.0, color=colors[i], linestyle=:dash, label=SBSmodel_labels[i])
     end
-    ylims!(ax, 1e6, 5.3e6)
+    ylims!(ax, 0.5e6, 5.2e6)
     xlims!(ax, 0.0, 26.0)
     # ax.xscale = log10
     # ax.yscale = log10

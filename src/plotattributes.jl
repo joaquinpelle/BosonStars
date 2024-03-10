@@ -25,8 +25,8 @@ function get_inclination_labels(runset::CameraRunSet)
 end
 
 get_cbar_ticks(::LBS) = [[0.0,0.02,0.05],[0.0, 0.1, 0.2],[0.0, 0.5, 1.0]]
-get_cbar_ticks(::SBS) = [[0.0,0.002,0.004],[0.0, 0.005, 0.01, 0.015],[0.01, 0.02, 0.03]]
-get_cbar_ticks(::BH) = [[0.0,0.0005,0.0015],[0.0, 0.002, 0.004],[0.0, 0.004, 0.008]]
+get_cbar_ticks(::SBS) = [[0.0,0.0005,0.0015],[0.0, 0.002, 0.004],[0.0, 0.005, 0.01]]
+get_cbar_ticks(::BH) = [[0.0,0.0005,0.0015],[0.0, 0.002, 0.004],[0.0, 0.005, 0.01]]
 
 model_label(F::TemperatureFactors) = model_label(F.model)
 model_label(F::EffectivePotential) = model_label(F.model)
