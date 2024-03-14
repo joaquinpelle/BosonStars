@@ -1,9 +1,9 @@
 function inner_radius(model::SBS{Int}) 
-    model.id == 1 && return 6.8 #6.845535408967213
-    model.id == 2 && return 6.2 #6.101401425243171
-    model.id == 3 && return 6.1 #6.035979471429705
+    model.id == 1 && return 6.74968
+    model.id == 2 && return 6.0 
+    model.id == 3 && return 6.0
 end
-inner_radius(::LBS) = 0.1 #1e-5
+inner_radius(::LBS) = 0.1 
 inner_radius(::BH) = 6.0
 
 function outer_radius(model::SBS{Int}) 
@@ -11,7 +11,7 @@ function outer_radius(model::SBS{Int})
     model.id == 2 && return 80.0
     model.id == 3 && return 80.0
 end
-outer_radius(::LBS) = 80.0
+outer_radius(::LBS) = 79.6
 outer_radius(::BH) = 80.0
 
 minimum_radius(::BH) = (event_horizon_radius∘create_spacetime∘BH)() + 1e-3
