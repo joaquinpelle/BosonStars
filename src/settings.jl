@@ -6,7 +6,13 @@ end
 inner_radius(::LBS) = 0.1 #1e-5
 inner_radius(::BH) = 6.0
 
-outer_radius(::AbstractModel) = 80.0
+function outer_radius(model::SBS{Int}) 
+    model.id == 1 && return 79.74968
+    model.id == 2 && return 80.0
+    model.id == 3 && return 80.0
+end
+outer_radius(::LBS) = 80.0
+outer_radius(::BH) = 80.0
 
 minimum_radius(::BH) = (event_horizon_radius∘create_spacetime∘BH)() + 1e-3
 minimum_radius(::AbstractBosonStar) = 0.0
