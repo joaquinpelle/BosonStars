@@ -501,7 +501,7 @@ function temperature_plot(LBSrunset::CameraRunSet, SBSrunset::CameraRunSet, BHru
     ylims!(ax, 0.5e6, 5.2e6)
     xlims!(ax, 0.0, 26.0)
     # ax.xscale = log10
-    # ax.yscale = log10
+    ax.yscale = log10
     ax.titlesize = 18
     ax.xlabel = radius_label() 
     
