@@ -356,12 +356,13 @@ function emissiviy_profile_mosaic_focused(SBSrunset::CoronaRunSet, BHrunset::Cor
 
     for j in 1:3
         ax = axes[1,j]
-        for i in 1:3
-            data = SBSdata[i,j]
-            lines!(ax, data[:,1], data[:,2]; linewidth=2.0, color=colors[i], linestyle=:dot, label=SBSmodel_labels[i])
-        end
         data = BHdata[1,j]
         lines!(ax, data[:,1], data[:,2]; linewidth=2.0, color=:black, linestyle=:solid, label=model_label(BH()))
+        markers = [:star5, :rect, :utriangle]
+        for i in 1:3
+            data = SBSdata[i,j]
+            scatter!(ax, data[:,1], data[:,2]; color=colors[i], marker=markers[i], markersize = 10, label=SBSmodel_labels[i])
+        end
         ylims!(ax, 1e-5, nothing)
         xlims!(ax, 5.0, 21.0)
         # ax.xscale = log10
@@ -498,10 +499,10 @@ function temperature_plot(LBSrunset::CameraRunSet, SBSrunset::CameraRunSet, BHru
         data = SBSdata[i]
         lines!(ax, data[:,1], data[:,2]; linewidth=2.0, color=colors[i], linestyle=:dash, label=SBSmodel_labels[i])
     end
-    ylims!(ax, 0.5e6, 5.2e6)
+    ylims!(ax, 0.5e6, 5.3e6)
     xlims!(ax, 0.0, 26.0)
-    # ax.xscale = log10
-    ax.yscale = log10
+    # ax.xscala = log10
+    # ax.yscale = log10
     ax.titlesize = 18
     ax.xlabel = radius_label() 
     
