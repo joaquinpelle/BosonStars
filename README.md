@@ -5,7 +5,7 @@
 </div>
 
 
-This repository contains the code for the production runs and plots in "[Accretion disks and relativistic line broadening in boson star spacetimes]([https://arxiv.org/](https://arxiv.org/abs/2403.11540))" by J. L. Rosa, J. Pelle, and D. Perez. It uses the open-source Julia package [Skylight.jl](https://github.com/joaquinpelle/Skylight.jl) for general-relativistic ray tracing and radiative transfer in arbitrary spacetimes.   
+This repository contains the code for the production runs and plots in "[Accretion disks and relativistic line broadening in boson star spacetimes](https://arxiv.org/abs/2403.11540)" by J. L. Rosa, J. Pelle, and D. Perez. It uses the open-source Julia package [Skylight.jl](https://github.com/joaquinpelle/Skylight.jl) for general-relativistic ray tracing and radiative transfer in arbitrary spacetimes.   
 
 If you find this codebase useful for your work, we kindly request to cite our preprint.
 
