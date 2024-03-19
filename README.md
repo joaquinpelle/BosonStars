@@ -22,7 +22,7 @@ The code requires Julia (version at least 1.6), and the following Julia packages
 
 ### Installation
 
-We would recommend that you create a dedicated Pkg project for this code. You can do so by following these steps:
+We recommend that you create a dedicated Pkg project for this code. You can do so by following these steps:
 
 1. Clone this repository and the [Skylight repository](https://github.com/joaquinpelle/Skylight.jl) to your local machine
 2. Open a terminal and navigate to this repository's folder
