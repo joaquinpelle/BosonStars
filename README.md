@@ -36,7 +36,7 @@ We recommend that you create a dedicated Pkg project for this code. You can do s
 
 The `main.jl` file contains a complete example with the parameters used in the preprint. You can run it by typing `julia --project=<ProjectName> main.jl` in the terminal where `<ProjectName>` is the project's name chosen in the installation step. Or, from the Julia REPL, `using Pkg`, `Pkg.activate("<ProjectName>")`, and `include("main.jl")`. The Skylight package supports multithreading, so you can take advantage of this by adding the option `-t=N` as `julia --project=<ProjectName> -t=N main.jl`, where `N` is the number of threads to use, or by setting the `JULIA_NUM_THREADS` bash environment variable to `N`. 
 
-The `radiative_transfer` function runs the simulations and automatically saves the data to the `io` folder. The resulting plots will be saved to the `plots` folder. The plotting functions can be called independently from the radiative transfer, provided the corresponding data has been saved. For example, see the `mainplots.jl` file. This is useful for reprocessing high-resolution data without having to rerun it.
+The `radiative_transfer` function runs the simulations and automatically saves the data to the `io` folder. The resulting plots will be saved to the `plots` folder. The plotting functions can be called independently from the radiative transfer, provided the corresponding data has been saved. For example, see the `mainplots.jl` script. This is useful for reprocessing high-resolution data without having to rerun it.
 
 ### Plot attributes
 
