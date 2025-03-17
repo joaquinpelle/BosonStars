@@ -291,7 +291,7 @@ function emissiviy_profile_mosaic(SBSrunset::CoronaRunSet, BHrunset::CoronaRunSe
             lines!(ax, data[:,1], data[:,2]; linewidth=2.0, color=colors[i], linestyle=:dash, label=SBSmodel_labels[i])
         end
         rad = exp10.(range(log10(0.1), stop=log10(110), length=100))
-        lamp = map(r -> flat_lamppost(r, LBSrunset.heights[j]), rad)
+        lamp = map(r -> flat_lamppost(r, SBSrunset.heights[j]), rad)
         lines!(ax, rad, 0.4lamp; linewidth=2.0, color=:gray, linestyle=:solid, label=flat_lamppost_label())
         supertitle = Label(fig[0,j], height_labels[j], justification=:center, fontsize=18, color=:black)
         supertitle.tellwidth = false
