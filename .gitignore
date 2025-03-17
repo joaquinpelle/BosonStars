@@ -1,3 +1,6 @@
 Manifest.toml
 BosonStars/Manifest.toml
 *.h5
+*.txt
+*.dat
+*.pdf
