@@ -39,7 +39,7 @@ create_spacetime(params::AbstractRunParams) = create_spacetime(params.model)
 create_spacetime(model::AbstractBosonStar) = BosonStarSpacetime(to_symbol(model))
 function create_spacetime(model::ABS)
     @warn "The spacetime for ABS models uses dummy temperature tables that are copies of the SBS models.
-    It does not matter if you only want line emission calculations, but we aware!"
+    It does not matter if you only want line emission calculations, but be aware!"
     return BosonStarSpacetime(to_symbol(model))
 end
 create_spacetime(::BH) = SchwarzschildSpacetimeSphericalCoordinates(M=1.0)
