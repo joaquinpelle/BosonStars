@@ -12,6 +12,7 @@ flat_lamppost_label() = L"I_e(r,h)"
 
 model_label(model::SBS{Int}) = L"\text{SBS%$(model.id)}"
 model_label(model::LBS{Int}) = L"\Lambda \text{BS%$(model.id)}"
+model_label(model::ABS{Int}) = L"\text{ABS%$(model.id)}"
 model_label(::BH) = L"\text{BH}"
 get_model_labels(runset::AbstractRunSet) = [model_label(model) for model in runset.models]
 
@@ -26,6 +27,7 @@ end
 
 get_cbar_ticks(::LBS) = [[0.0,0.02,0.05],[0.0, 0.1, 0.2],[0.0, 0.5, 1.0]]
 get_cbar_ticks(::SBS) = [[0.0,0.0005,0.0015],[0.0, 0.002, 0.004],[0.0, 0.005, 0.01]]
+get_cbar_ticks(::ABS) = [[0.0,0.0005,0.0015],[0.0, 0.002, 0.004],[0.0, 0.005, 0.01]]
 get_cbar_ticks(::BH) = [[0.0,0.0005,0.0015],[0.0, 0.002, 0.004],[0.0, 0.005, 0.01]]
 
 model_label(F::TemperatureFactors) = model_label(F.model)

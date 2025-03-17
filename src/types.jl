@@ -28,6 +28,18 @@ struct LBS{T<:Union{Int,CollectiveId}} <: AbstractBosonStar
     end
 end
 
+struct ABS{T<:Union{Int,CollectiveId}} <: AbstractBosonStar 
+    id::T
+    function ABS(id::Int) 
+        id in 6:8 || throw(ArgumentError("The id must be in the range `6:8`"))
+        new{Int}(id)
+    end
+    function LBS(id::CollectiveId) 
+        all(i -> i in 6:8, id) || throw(ArgumentError("The ids must be in the range `6:8`"))
+        new{typeof(id)}(id)
+    end
+
+end
 abstract type AbstractRunParams end
 abstract type AbstractRunSet end
 
@@ -68,6 +80,7 @@ struct IsNotCollective <: CollectiveTrait end
 iscollective(::AbstractModel) = IsNotCollective()
 iscollective(::SBS{T}) where {T<:CollectiveId} = IsCollective()
 iscollective(::LBS{T}) where {T<:CollectiveId} = IsCollective()
+iscollective(::ABS{T}) where {T<:CollectiveId} = IsCollective()
 iscollective(runset::AbstractRunSet) = iscollective(runset.models)
 
 @with_kw mutable struct TemperatureFactors{M}

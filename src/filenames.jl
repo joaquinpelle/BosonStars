@@ -27,4 +27,5 @@ modeldir(::BH) = "schwarzschild"
 
 to_symbol(model::SBS{Int}) = Symbol("SBS", model.id)
 to_symbol(model::LBS{Int}) = Symbol("LBS", model.id)
+to_symbol(model::ABS{Int}) = Symbol("ABS", model.id)
 to_symbol(::BH) = :BH

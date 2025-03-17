@@ -26,6 +26,20 @@ function Base.iterate(m::LBS{T}, state) where {T<:CollectiveId}
     return LBS(next_item), next_state
 end
 
+function Base.iterate(m::ABS{T}) where {T<:CollectiveId}
+    it = Base.iterate(m.id)
+    it === nothing && return it
+    item, state = it
+    return ABS(item), state
+end
+
+function Base.iterate(m::ABS{T}, state) where {T<:CollectiveId} 
+    it = Base.iterate(m.id, state)
+    it === nothing && return it
+    next_item, next_state = it
+    return ABS(next_item), next_state
+end
+
 Base.IteratorSize(m::AbstractBosonStar) = Base.IteratorSize(m.id)
 Base.length(m::AbstractBosonStar) = Base.length(m.id)
 Base.isdone(m::AbstractBosonStar) = Base.isdone(m.id)
