@@ -5,9 +5,9 @@ function inner_radius(model::SBS{Int})
 end
 inner_radius(::LBS) = 0.1 
 function inner_radius(model::ABS{Int}) 
-    model.id == 6 && return 5.56021
-    model.id == 7 && return 5.9736 
-    model.id == 8 && return 5.95582
+    model.id == 1 && return 5.56021
+    model.id == 2 && return 5.9736 
+    model.id == 3 && return 5.95582
 end
 inner_radius(::BH) = 6.0
 
@@ -37,6 +37,11 @@ cbp_kwargs(::AbstractBosonStar) = ()
 
 create_spacetime(params::AbstractRunParams) = create_spacetime(params.model)
 create_spacetime(model::AbstractBosonStar) = BosonStarSpacetime(to_symbol(model))
+function create_spacetime(model::ABS)
+    @warn "The spacetime for ABS models uses dummy temperature tables that are copies of the SBS models.
+    It does not matter if you only want line emission calculations, but we aware!"
+    return BosonStarSpacetime(to_symbol(model))
+end
 create_spacetime(::BH) = SchwarzschildSpacetimeSphericalCoordinates(M=1.0)
 
 create_accretion_disk(params::AbstractRunParams) = create_accretion_disk(params.model)

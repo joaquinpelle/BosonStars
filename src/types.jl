@@ -31,15 +31,16 @@ end
 struct ABS{T<:Union{Int,CollectiveId}} <: AbstractBosonStar 
     id::T
     function ABS(id::Int) 
-        id in 6:8 || throw(ArgumentError("The id must be in the range `6:8`"))
+        id in 1:3 || throw(ArgumentError("The id must be in the range `1:3`"))
         new{Int}(id)
     end
-    function LBS(id::CollectiveId) 
-        all(i -> i in 6:8, id) || throw(ArgumentError("The ids must be in the range `6:8`"))
+    function ABS(id::CollectiveId) 
+        all(i -> i in 1:3, id) || throw(ArgumentError("The ids must be in the range `1:3`"))
         new{typeof(id)}(id)
     end
 
 end
+
 abstract type AbstractRunParams end
 abstract type AbstractRunSet end
 
